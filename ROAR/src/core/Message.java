@@ -9,36 +9,36 @@ public class Message implements Serializable{
 
 	private static final long serialVersionUID = 0xDEADBEEFL;
 	
-	private List<User> authors;
+	private List<String> authors;
 	private List<String> hashtags;
 	private String content;
-	private List<User> recipient;
+	private List<String> recipient;
 	
 	
-	public Message(User autho, String cont){
+	public Message(String autho, String cont){
 		
 		
 		hashtags = new ArrayList<String>();
-		authors = new ArrayList<User>();
+		authors = new ArrayList<String>();
 		authors.add(autho);
 		this.content = cont;
-		recipient = new ArrayList<User>();
+		recipient = new ArrayList<String>();
 	}
 		
 	
-	public List<User> getAuthors() {
+	public List<String> getAuthors() {
 		return authors;
 	}
 	
-	public void addAuthors(User auth) {
+	public void addAuthors(String auth) {
 		this.authors.add(auth);
 	}
 	
-	public List<User> getRecipient() {
+	public List<String> getRecipient() {
 		return recipient;
 	}
 	
-	public void addRecipient(User recipient) {
+	public void addRecipient(String recipient) {
 		this.recipient.add(recipient);
 	}
 	

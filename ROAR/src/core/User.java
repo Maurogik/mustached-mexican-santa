@@ -11,10 +11,12 @@ public class User implements Serializable{
 	private List<User> followers;
 	private List<String> interest; //followed hashtag
 	private String name;
+	private String password;
 	
 	
-	public User(String name){
+	public User(String name, String passw){
 		this.setName(name);
+		password = passw;
 		followed = new ArrayList<User>();
 		followers = new ArrayList<User>();
 		interest = new ArrayList<String>();
