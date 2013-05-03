@@ -21,7 +21,7 @@ public class Parser {
 				if(part.length != 1) return "ERREUR : PUSH mal formé";
 				return push();
 			case PULL:
-				if(part.length >= 3) return "ERREUR:GET mal formé";
+				if(part.length >= 3) return "ERREUR:PULL mal formé";
 				switch(part.length) {
 				case 1 : 
 					return pull(20);
@@ -30,7 +30,9 @@ public class Parser {
 					int n = 0;
 					try{
 						n = Integer.parseInt(part[1]);
-						return pull(n);
+						if(n>0)
+							return pull(n);
+						return "ERREUR: le nombre de ligne demandé doit être positif";
 					}
 					catch (Exception NumberFormatException){
 						return pull(20, part[1]);
@@ -62,13 +64,13 @@ public class Parser {
 
 		/*juste les méthodes à récupérer par rmi*/
 		private String pull(int n){
-			return "";
+			return "le pull avec "+n+" lignes";
 		}
 		private String pull(int n, String auteur){
-			return "";
+			return "le pull avec "+n+" lignes pour l'auteur "+auteur;
 		}
 		private String push() {
-			return "";
+			return "le push ";
 		}
 	}
 }
