@@ -1,12 +1,27 @@
 package core;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Message {
-	private List<String> authors;
+public class Message implements Serializable{
+	
+	private List<User> authors;
 	private List<String> hashtags;
 	private String content;
 	private List<String> recipient;
+	
+	
+	public Message(String autho, String content){
+		
+		
+		
+	}
+	
+	public Message(List<String>p_authors, String content){
+		
+		
+		
+	}
 	
 	
 	
