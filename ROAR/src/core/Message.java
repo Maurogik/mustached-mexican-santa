@@ -17,7 +17,7 @@ public class Message implements Serializable{
 		
 	}
 	
-	public Message(List<String>p_authors, String content){
+	public Message(List<User>p_authors, String content){
 		
 		
 		
@@ -25,11 +25,11 @@ public class Message implements Serializable{
 	
 	
 	
-	public List<String> getAuthors() {
+	public List<User> getAuthors() {
 		return authors;
 	}
 	
-	public void setAuthors(List<String> authors) {
+	public void setAuthors(List<User> authors) {
 		this.authors = authors;
 	}
 	
