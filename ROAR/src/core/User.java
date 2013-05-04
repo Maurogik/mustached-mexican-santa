@@ -15,7 +15,7 @@ public class User implements Serializable{
 	
 	
 	public User(String name, String passw){
-		this.setName(name);
+		this.name = name;
 		password = passw;
 		followed = new ArrayList<User>();
 		followers = new ArrayList<User>();
@@ -58,8 +58,9 @@ public class User implements Serializable{
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
+	public String getPassword() {
+		return password;
 	}
+
 	
 }

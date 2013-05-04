@@ -2,6 +2,8 @@ package core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Message implements Serializable{
@@ -13,16 +15,17 @@ public class Message implements Serializable{
 	private List<String> hashtags;
 	private String content;
 	private List<String> recipient;
+	private Date date;
 	
 	
 	public Message(String autho, String cont){
-		
 		
 		hashtags = new ArrayList<String>();
 		authors = new ArrayList<String>();
 		authors.add(autho);
 		this.content = cont;
 		recipient = new ArrayList<String>();
+		date = new Date(); //date du jour...normalement
 	}
 		
 	
@@ -57,5 +60,11 @@ public class Message implements Serializable{
 	public void addHashtags(String hasht) {
 		this.hashtags.add(hasht);
 	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
 	
 }
