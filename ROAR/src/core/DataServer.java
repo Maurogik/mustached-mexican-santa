@@ -37,13 +37,46 @@ public class DataServer {
 	
 	
 	
-	public DataServer getServer(){
+	public static DataServer getServer(){
 		
 		if(server == null){		
 			server = new DataServer();
 		}
 		
 		return server;
+	}
+	
+	public boolean isValidLogin(String pseudo, String passw){
+		
+		User us = retrieveUser(pseudo);
+		return us.getPassword().equals(passw);
+		
+	}
+	
+	public List<String> getRegisteredUsers(){
+		
+		List<String> regUsers = new ArrayList<String>();
+		
+		for(User us : registeredUsers){
+			regUsers.add(us.getName());
+		}
+		
+		return regUsers;
+	}
+	
+	public List<String> getHastags(){
+		
+		List<String> hashTags = new ArrayList<String>();
+		
+		for(Message mes : recentMessages){
+			for(String hashT : mes.getHashtags()){
+				if(!hashTags.contains(hashT)){
+					hashTags.add(hashT);
+				}
+			}
+		}
+		
+		return hashTags;
 	}
 	
 	public void postMessage(String content, String author, List<String> recipient, List<String> hashTags){

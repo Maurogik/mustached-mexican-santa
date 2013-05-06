@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface InterfacePublique extends Remote
 {
-	public InterfacePrivee login(String login, String mdp);
+	public InterfacePrivee login(String login, String mdp) throws RemoteException;
 	
 	public List<Message> getMessagesAbout(String hashtag) throws RemoteException;
 	

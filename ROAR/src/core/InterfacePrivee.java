@@ -29,4 +29,5 @@ public interface InterfacePrivee extends Remote
 	
 	public void addInterest(String interest) throws RemoteException;
 	
+	public String getName() throws RemoteException;
 }
