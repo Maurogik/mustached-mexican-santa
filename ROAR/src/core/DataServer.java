@@ -3,16 +3,16 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server {
+public class DataServer {
 	
 	
-	private static Server server = null;
+	private static DataServer server = null;
 	
 	private List<Message> recentMessages;
 	private List<User> registeredUsers;
 	private List<String> logs; // ancien messages sérializés
 	
-	private Server(){
+	private DataServer(){
 		recentMessages = new ArrayList<Message>();
 		registeredUsers = new ArrayList<User>();
 		logs = new ArrayList<String>();
@@ -37,10 +37,10 @@ public class Server {
 	
 	
 	
-	public Server getServer(){
+	public DataServer getServer(){
 		
 		if(server == null){		
-			server = new Server();
+			server = new DataServer();
 		}
 		
 		return server;
@@ -143,6 +143,7 @@ public class Server {
 		res.addAll(getMessagesTo(usr.getName()));
 		
 		//Tri par date
+		//TODO 
 		//garder seulement nbMessages
 		
 		return res;
