@@ -61,6 +61,11 @@ public class User implements Serializable{
 	public String getPassword() {
 		return password;
 	}
+	
+	public boolean equals(User user){
+		return name.equals(user.getName()) && password.equals(user.getPassword()) && interest.equals(user.getInterest())
+				&& followed.equals(user.getFollowed()) && followers.equals(user.getFollowers());
+	}
 
 	
 }

@@ -64,6 +64,11 @@ public class Message implements Serializable{
 	public Date getDate() {
 		return date;
 	}
+	
+	public boolean equals(Message mes){
+		return content.equals(mes.getContent()) && authors.equals(mes.getAuthors())
+				&& hashtags.equals(mes.getHashtags()) && recipient.equals(mes.getRecipient());
+	}
 
 	
 }

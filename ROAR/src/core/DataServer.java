@@ -59,6 +59,19 @@ public class DataServer {
 		}
 	}
 	
+	public void relayerMessage(String user, Message mes){
+
+		int index = recentMessages.indexOf(mes);
+		if(index != -1 ){
+			recentMessages.get(index).addAuthors(user);
+		} else {
+			//check if message in older logs
+			System.out.println("ERROR : message not found in database");
+		}
+		
+		
+	}
+	
 	public void addFollowRelationship(String follower, String followed){
 		User foler = retrieveUser(follower);
 		User foled = retrieveUser(followed);
