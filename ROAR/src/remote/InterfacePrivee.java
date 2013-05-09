@@ -23,7 +23,7 @@ public interface InterfacePrivee extends Remote
 	
 	public void postMessage(String msg) throws RemoteException;
 	
-	public void relayerMessage(Message mes) throws RemoteException;
+	public void relayerMessage(long mesID) throws RemoteException;
 	
 	public void follow(String userToFollow) throws RemoteException;
 	

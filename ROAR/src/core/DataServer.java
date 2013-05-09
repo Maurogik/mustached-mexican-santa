@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import remote.Message;
 import remote.User;
@@ -30,8 +32,10 @@ public class DataServer implements Serializable{
 	private List<User> registeredUsers;
 	private List<String> logs; // ancien messages sérializés
 	private static final String logPath= "./logs";
-	private static final int logSize = 20;
+	private static final int logSize = 10;
 	private static final String serverSave = "./server.save";
+	
+	private long lastMessageID = 0;
 	
 	private DataServer(){
 		recentMessages = new ArrayList<Message>();
@@ -40,6 +44,9 @@ public class DataServer implements Serializable{
 		
 		User momo = new User("Momo", "lol");
 		registeredUsers.add(momo);
+		
+		User gwenn = new User("Gwenn", "lol");
+		registeredUsers.add(gwenn);
 	}
 	
 	private List<Message> loadLog(String logRef){
@@ -53,6 +60,10 @@ public class DataServer implements Serializable{
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			res = (List<Message>)ois.readObject();
 			
+			System.out.println("log loaded : " + logRef);
+			
+			return res;
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -62,6 +73,8 @@ public class DataServer implements Serializable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("log loading failed");
 		
 		return res;
 	}
@@ -84,6 +97,8 @@ public class DataServer implements Serializable{
 			e.printStackTrace();
 		}
 		
+		System.out.println("log saved : "+logName);
+		
 		saveServer();
 	}
 	
@@ -96,6 +111,8 @@ public class DataServer implements Serializable{
 			DataServer temp = (DataServer)ois.readObject();
 			if(temp != null){
 				server = temp;
+				
+				System.out.println("server loaded");
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -117,6 +134,8 @@ public class DataServer implements Serializable{
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this);
 			
+			System.out.println("server saved : " + serverSave);
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -125,6 +144,17 @@ public class DataServer implements Serializable{
 		
 	}
 	
+	
+	private int getMessageIndexFromID(List<Message> mesList, long id){
+		
+		for(int i = 0; i<mesList.size(); ++i){
+			if(mesList.get(i).getID() == id){
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 	
 	
 	public static DataServer getServer(){
@@ -183,7 +213,7 @@ public class DataServer implements Serializable{
 	
 	public void postMessage(String content, String author, List<String> recipient, List<String> hashTags){
 		
-		Message mes = new Message(author, content);
+		Message mes = new Message(++lastMessageID, author, content);
 		
 		for(String rec : recipient){
 			mes.addRecipient(rec);
@@ -202,14 +232,26 @@ public class DataServer implements Serializable{
 		System.out.println("message from "+author+" posted");
 	}
 	
-	public void relayerMessage(String user, Message mes){
+	public void relayerMessage(String user, long mesID){
 
-		int index = recentMessages.indexOf(mes);
+		int index = getMessageIndexFromID(recentMessages, mesID);
+		
 		if(index != -1 ){
 			recentMessages.get(index).addAuthors(user);
 		} else {
-			//check if message in older logs
-			System.out.println("ERROR : message not found in database");
+			int i = 0;
+			List<Message> old = null;
+			while(index == -1 && i < logs.size()){
+				old = loadLog(logs.get(i));
+				index = getMessageIndexFromID(old, mesID);
+			}
+			
+			if(i<logs.size() && old != null){
+				old.get(index).addAuthors(user);
+			} else {
+				System.out.println("ERROR : message not found in database");
+			}
+			
 		}
 		
 		System.out.println("message relayé");
@@ -241,7 +283,7 @@ public class DataServer implements Serializable{
 		System.out.println("interest added");
 	}
 	
-	public List<Message> getMessagesFrom(String user){
+	public List<Message> getMessagesFrom(String user, int nbMes){
 		
 		List<Message> res = new ArrayList<Message>();
 		
@@ -251,12 +293,26 @@ public class DataServer implements Serializable{
 			}
 		}
 		
+		int logInd = 0;
+		while(res.size() < nbMes && logInd < logs.size()){
+			
+			List<Message> tempOld = loadLog(logs.get(logInd));
+			
+			for(Message msg : tempOld){
+				if(msg.getAuthors().contains(user)){
+					res.add(msg);
+				}
+			}
+			
+			++logInd;
+		}
+		
 		System.out.println("get message from requested");
 		
 		return res;
 	}
 	
-	public List<Message> getMessagesAbout(String hashtag){
+	public List<Message> getMessagesAbout(String hashtag, int nbMes){
 		
 		List<Message> res = new ArrayList<Message>();
 		
@@ -266,12 +322,26 @@ public class DataServer implements Serializable{
 			}
 		}
 		
+		int logInd = 0;
+		while(res.size() < nbMes && logInd < logs.size()){
+			
+			List<Message> tempOld = loadLog(logs.get(logInd));
+			
+			for(Message msg : tempOld){
+				if(msg.getHashtags().contains(hashtag)){
+					res.add(msg);
+				}
+			}
+			
+			++logInd;
+		}
+		
 		System.out.println("get message about requested");
 		
 		return res;
 	}
 	
-	public List<Message> getMessagesTo(String recipient){
+	public List<Message> getMessagesTo(String recipient, int nbMes){
 		
 		List<Message> res = new ArrayList<Message>();
 		
@@ -280,6 +350,21 @@ public class DataServer implements Serializable{
 				res.add(msg);
 			}
 		}
+		
+		int logInd = 0;
+		while(res.size() < nbMes && logInd < logs.size()){
+			
+			List<Message> tempOld = loadLog(logs.get(logInd));
+			
+			for(Message msg : tempOld){
+				if(msg.getRecipient().contains(recipient)){
+					res.add(msg);
+				}
+			}
+			
+			++logInd;
+		}
+		
 		
 		System.out.println("get message to requested");
 		
@@ -298,22 +383,28 @@ public class DataServer implements Serializable{
 		
 		for (User followed : usr.getFollowed()) {
 			//Ajoute les messages des personnes suivie
-			res.addAll(getMessagesFrom(followed.getName()));
+			res.addAll(getMessagesFrom(followed.getName(), nbMessages));
+			res.addAll(getMessagesTo(followed.getName(), nbMessages));
 		}
 		
 		for(String interest : usr.getInterest()){
 			//Ajoute les messages convernant les hashtags suivis
-			res.addAll(getMessagesAbout(interest));
+			res.addAll(getMessagesAbout(interest, nbMessages));
 		}
 		
-		res.addAll(getMessagesFrom(user));
+		res.addAll(getMessagesFrom(user, nbMessages));
 		
-		res.addAll(getMessagesTo(usr.getName()));
+		res.addAll(getMessagesTo(usr.getName(), nbMessages));
 		
 		//Tri par date
 		//TODO 
 		//garder seulement nbMessages
 		
+		Collections.sort(res);
+		
+		if(res.size() > nbMessages){
+			res = res.subList(0, nbMessages);
+		}
 		
 		System.out.println("get user messages requested");
 		

@@ -69,9 +69,9 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 	}
 
 	@Override
-	public void relayerMessage(Message mes) throws RemoteException {
+	public void relayerMessage(long mesID) throws RemoteException {
 		
-		server.relayerMessage(userName, mes);
+		server.relayerMessage(userName, mesID);
 	}
 
 	@Override

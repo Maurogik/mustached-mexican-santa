@@ -36,13 +36,13 @@ public class AccesPublic extends UnicastRemoteObject implements InterfacePubliqu
 	public List<Message> getMessagesAbout(String hashtag)
 			throws RemoteException {
 		
-		return server.getMessagesAbout(hashtag);
+		return server.getMessagesAbout(hashtag, 20);
 	}
 
 	@Override
 	public List<Message> getMessagesFrom(String user) throws RemoteException {
 		
-		return server.getMessagesFrom(user);
+		return server.getMessagesFrom(user, 20);
 	}
 
 	@Override
