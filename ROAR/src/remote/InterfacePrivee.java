@@ -21,7 +21,7 @@ public interface InterfacePrivee extends Remote
 	
 	public List<Message> getUserMessages() throws RemoteException;
 	
-	public void postMessage(String content, List<String> recipient, List<String> hashTags) throws RemoteException;
+	public void postMessage(String msg) throws RemoteException;
 	
 	public void relayerMessage(Message mes) throws RemoteException;
 	

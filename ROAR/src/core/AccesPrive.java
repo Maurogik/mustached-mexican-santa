@@ -27,8 +27,10 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 	}
 
 	@Override
-	public void postMessage(String content, List<String> recipient,
-			List<String> hashTags) throws RemoteException {
+	public void postMessage(String meg) throws RemoteException {
+		
+		
+		
 		
 		server.postMessage(content, userName, recipient, hashTags);
 	}

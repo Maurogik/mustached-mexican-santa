@@ -141,7 +141,7 @@ public class DataServer implements Serializable{
 	
 	public boolean isValidLogin(String pseudo, String passw){
 		
-		System.out.println("Login "+pseudo+" pass "+passw + "requested");
+		System.out.println("Login "+pseudo+" pass "+passw + " requested");
 		User us = retrieveUser(pseudo);
 		boolean res = us.getPassword().equals(passw);
 		
