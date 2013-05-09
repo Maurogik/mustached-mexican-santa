@@ -4,6 +4,10 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+import remote.InterfacePrivee;
+import remote.InterfacePublique;
+import remote.Message;
+
 public class AccesPublic extends UnicastRemoteObject implements InterfacePublique{
 	
 	/**

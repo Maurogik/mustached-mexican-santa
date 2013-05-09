@@ -9,8 +9,13 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import remote.Message;
+import remote.User;
+
 
 public class DataServer implements Serializable{
+
+
 	
 	
 	/**
