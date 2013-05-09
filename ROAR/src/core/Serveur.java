@@ -22,7 +22,7 @@ public class Serveur
 			AccesPublic ap = new AccesPublic();
 			String url;
 			LocateRegistry.createRegistry(2001);
-			url = "rmi://192.168.1.98:2001/roar";
+			url = "rmi://192.168.1.75:2001/roar";
 			System.out.println("Enregistrement de l'objet avec l'url : " + url);
 			Naming.rebind(url, ap);
 			new ClassFileServer(2007, "bin/");

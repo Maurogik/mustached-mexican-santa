@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +10,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import client.windows.MainWindow;
+
 import remote.InterfacePrivee;
 import remote.InterfacePublique;
 import remote.Message;
@@ -16,8 +19,8 @@ import remote.Message;
 public class Client 
 {
 	
-	InterfacePublique iPub;
-	InterfacePrivee iPriv;
+	public static InterfacePublique iPub;
+	public static InterfacePrivee iPriv;
 	
 	private enum Commande{
 		PUSH, PULL, H, ERREUR, LOGIN;
@@ -195,13 +198,20 @@ public class Client
 			System.setSecurityManager(new RMISecurityManager());
 			System.out.println("-- Demarrage du Client --");
 			System.out.println("En attente du serveur...");
-			Remote r = Naming.lookup("rmi://192.168.1.98:2001/roar");
+			Remote r = Naming.lookup("rmi://192.168.1.75:2001/roar");
 			cl.setIPub((InterfacePublique)r);
-			System.out.println("-- Menu --");
+			System.out.println("Debut");
 			cl.getIPub().echo();
-			while(true){
-				System.out.println(cl.processInput());
-			}
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						MainWindow frame = new MainWindow();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		} 
 		catch (Exception e) 
 		{
