@@ -8,7 +8,7 @@ package classserver;
  * method which is responsible for retrieving the bytecodes
  * for a class.<p>
  *
- * The ClassServer creates a thread that listens on a socket
+ * The ClassServer creates a thread   that listens on a socket
  * and accepts  HTTP GET requests. The HTTP response contains the
  * bytecodes for the class that requested in the GET header. <p>
  *

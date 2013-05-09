@@ -5,6 +5,11 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import classserver.ClassFileServer;
 
@@ -12,6 +17,7 @@ public class Serveur
 {
 	public static void main(String[] args) 
 	{
+
 		try {
 			AccesPublic ap = new AccesPublic();
 			String url;

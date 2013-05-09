@@ -7,7 +7,7 @@ package classserver;
  * server.
  */
 public class ClassFileServer extends ClassServer {
-
+  
   private java.io.File[] codebases;
 
 

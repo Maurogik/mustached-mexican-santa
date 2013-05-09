@@ -193,6 +193,8 @@ public class DataServer implements Serializable{
 			mes.addHashtags(hash);
 		}
 		
+		recentMessages.add(mes);
+		
 		if(recentMessages.size() >= logSize){
 			saveNewLog();
 		}

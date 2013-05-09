@@ -5,6 +5,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import remote.InterfacePrivee;
 import remote.Message;
@@ -31,13 +34,36 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 	@Override
 	public void postMessage(String mes) throws RemoteException {
 		
-		StringTokenizer tok = new StringTokenizer(mes);
-		
-		String content;
 		List<String> recip = new ArrayList<String>();
 		List<String> hashT = new ArrayList<String>();
 		
-		
+		try{
+			
+			   Pattern p = Pattern .compile("@([a-z]|[A-Z])+");
+			  
+			   Matcher m = p.matcher(mes);
+			   
+			   while (m.find()){
+				   
+				  recip.add(mes.substring(m.start(), m.end()));
+			      System.out.println(mes.substring(m.start(), m.end()));
+			      
+			   }
+			   
+			   
+			   Pattern p2 = Pattern .compile("#([a-z]|[A-Z])+");
+				  
+			   Matcher m2 = p2.matcher(mes);
+			   
+			   while (m2.find()){
+				   
+				  hashT.add(mes.substring(m2.start(), m2.end()));
+			      System.out.println(mes.substring(m2.start(), m2.end()));
+			      
+			   }
+			   
+		}catch(PatternSyntaxException pse){
+		}
 		
 		server.postMessage(mes, userName, recip, hashT);
 	}
