@@ -1,12 +1,13 @@
 package core;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.List;
 
 import remote.InterfacePrivee;
 import remote.Message;
 
-public class AccesPrive extends AccesPublic implements InterfacePrivee{
+public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializable{
 
 	/**
 	 * 

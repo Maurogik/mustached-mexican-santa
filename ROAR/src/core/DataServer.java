@@ -37,6 +37,9 @@ public class DataServer implements Serializable{
 		recentMessages = new ArrayList<Message>();
 		registeredUsers = new ArrayList<User>();
 		logs = new ArrayList<String>();
+		
+		User momo = new User("Momo", "lol");
+		registeredUsers.add(momo);
 	}
 	
 	private List<Message> loadLog(String logRef){
@@ -131,13 +134,20 @@ public class DataServer implements Serializable{
 			loadServer();
 		}
 		
+		System.out.println("server started");
+		
 		return server;
 	}
 	
 	public boolean isValidLogin(String pseudo, String passw){
 		
+		System.out.println("Login "+pseudo+" pass "+passw + "requested");
 		User us = retrieveUser(pseudo);
-		return us.getPassword().equals(passw);
+		boolean res = us.getPassword().equals(passw);
+		
+		System.out.println("sucess : "+ res);
+		
+		return res;
 		
 	}
 	
@@ -148,6 +158,8 @@ public class DataServer implements Serializable{
 		for(User us : registeredUsers){
 			regUsers.add(us.getName());
 		}
+		
+		System.out.println("get users requested");
 		
 		return regUsers;
 	}
@@ -163,6 +175,8 @@ public class DataServer implements Serializable{
 				}
 			}
 		}
+		
+		System.out.println("get hashtags requested");
 		
 		return hashTags;
 	}
@@ -182,6 +196,8 @@ public class DataServer implements Serializable{
 		if(recentMessages.size() >= logSize){
 			saveNewLog();
 		}
+		
+		System.out.println("message from "+author+" posted");
 	}
 	
 	public void relayerMessage(String user, Message mes){
@@ -194,6 +210,7 @@ public class DataServer implements Serializable{
 			System.out.println("ERROR : message not found in database");
 		}
 		
+		System.out.println("message relayé");
 		
 	}
 	
@@ -208,6 +225,7 @@ public class DataServer implements Serializable{
 			System.out.println("Error, unknown user");
 		}
 		
+		System.out.println("relashionship added");
 	}
 	
 	public void addInterest(String user, String interest){
@@ -217,6 +235,8 @@ public class DataServer implements Serializable{
 			return;
 		}
 		usr.addInterest(interest);
+		
+		System.out.println("interest added");
 	}
 	
 	public List<Message> getMessagesFrom(String user){
@@ -228,6 +248,8 @@ public class DataServer implements Serializable{
 				res.add(msg);
 			}
 		}
+		
+		System.out.println("get message from requested");
 		
 		return res;
 	}
@@ -242,6 +264,8 @@ public class DataServer implements Serializable{
 			}
 		}
 		
+		System.out.println("get message about requested");
+		
 		return res;
 	}
 	
@@ -254,6 +278,8 @@ public class DataServer implements Serializable{
 				res.add(msg);
 			}
 		}
+		
+		System.out.println("get message to requested");
 		
 		return res;
 	}
@@ -283,6 +309,9 @@ public class DataServer implements Serializable{
 		//Tri par date
 		//TODO 
 		//garder seulement nbMessages
+		
+		
+		System.out.println("get user messages requested");
 		
 		return res;
 	}

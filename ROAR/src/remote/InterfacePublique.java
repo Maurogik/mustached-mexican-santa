@@ -16,4 +16,6 @@ public interface InterfacePublique extends Remote
 	
 	public List<String> getExistingHashtags() throws RemoteException;
 	
+	public void echo() throws RemoteException;
+	
 }
