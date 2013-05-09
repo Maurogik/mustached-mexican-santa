@@ -25,7 +25,9 @@ public class Serveur
 			AccesPublic ap = new AccesPublic();
 			String url;
 			LocateRegistry.createRegistry(2001);
+
 			url = "rmi://82.236.41.99:2001/roar";
+
 			System.out.println("Enregistrement de l'objet avec l'url : " + url);
 			Naming.rebind(url, ap);
 			System.out.println("rebind done");

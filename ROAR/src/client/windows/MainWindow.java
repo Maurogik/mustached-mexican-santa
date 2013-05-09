@@ -17,23 +17,7 @@ import javax.swing.JButton;
 public class MainWindow extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow frame = new MainWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -49,7 +33,7 @@ public class MainWindow extends JFrame {
 		
 		JButton btnConnexion = new JButton("Connexion");
 		btnConnexion.setBounds(166, 81, 117, 29);
-		btnConnexion.addActionListener(new connexion());
+		btnConnexion.addActionListener(new Connexion(this));
 		contentPane.add(btnConnexion);
 		
 		JButton btnQuitter = new JButton("Quitter");
@@ -57,12 +41,17 @@ public class MainWindow extends JFrame {
 		contentPane.add(btnQuitter);
 	}
 	
-	public class connexion implements ActionListener{
-
+	public class Connexion implements ActionListener{
+		JFrame frame;
+		public Connexion(JFrame f) {
+			frame = f;
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ConnexionWindow frame = new ConnexionWindow();
-			frame.setVisible(true);
+			ConnexionWindow con = new ConnexionWindow();
+			con.setVisible(true);
+			this.frame.dispose();
 		}
 		
 	}
