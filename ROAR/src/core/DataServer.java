@@ -304,6 +304,8 @@ public class DataServer implements Serializable{
 			res.addAll(getMessagesAbout(interest));
 		}
 		
+		res.addAll(getMessagesFrom(user));
+		
 		res.addAll(getMessagesTo(usr.getName()));
 		
 		//Tri par date

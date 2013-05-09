@@ -70,5 +70,11 @@ public class Message implements Serializable{
 				&& hashtags.equals(mes.getHashtags()) && recipient.equals(mes.getRecipient());
 	}
 
-	
+	public String toString(){
+		String res;
+		
+		res = "by : " + authors +"\n on : "+date.toString()+"\n\n"+content;
+		
+		return res;
+	}
 }

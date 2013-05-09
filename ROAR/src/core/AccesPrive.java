@@ -2,7 +2,9 @@ package core;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import remote.InterfacePrivee;
 import remote.Message;
@@ -27,12 +29,17 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 	}
 
 	@Override
-	public void postMessage(String meg) throws RemoteException {
+	public void postMessage(String mes) throws RemoteException {
+		
+		StringTokenizer tok = new StringTokenizer(mes);
+		
+		String content;
+		List<String> recip = new ArrayList<String>();
+		List<String> hashT = new ArrayList<String>();
 		
 		
 		
-		
-		server.postMessage(content, userName, recipient, hashTags);
+		server.postMessage(mes, userName, recip, hashT);
 	}
 
 	@Override
