@@ -3,6 +3,9 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
+import remote.Message;
+import remote.User;
+
 public class DataServer {
 	
 	
