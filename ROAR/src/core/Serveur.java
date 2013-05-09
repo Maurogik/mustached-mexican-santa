@@ -13,11 +13,11 @@ import java.util.regex.PatternSyntaxException;
 
 import classserver.ClassFileServer;
 
-public class Serveur 
+public class Serveur
 {
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
-		
+
 		System.setProperty("java.rmi.server.codebase", "http://localhost:2007/");
 		System.setProperty("java.rmi.server.hostname", "82.236.41.99");
 
@@ -32,7 +32,7 @@ public class Serveur
 			Naming.rebind(url, ap);
 			System.out.println("rebind done");
 			new ClassFileServer(2007, "bin/");
-		} 
+		}
 		catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public class Serveur
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }
