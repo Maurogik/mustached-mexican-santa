@@ -17,14 +17,18 @@ public class Serveur
 {
 	public static void main(String[] args) 
 	{
+		
+		System.setProperty("java.rmi.server.codebase", "http://localhost:2007/");
+		System.setProperty("java.rmi.server.hostname", "82.236.41.99");
 
 		try {
 			AccesPublic ap = new AccesPublic();
 			String url;
 			LocateRegistry.createRegistry(2001);
-			url = "rmi://192.168.1.98:2001/roar";
+			url = "rmi://82.236.41.99:2001/roar";
 			System.out.println("Enregistrement de l'objet avec l'url : " + url);
 			Naming.rebind(url, ap);
+			System.out.println("rebind done");
 			new ClassFileServer(2007, "bin/");
 		} 
 		catch (RemoteException e) {

@@ -42,13 +42,14 @@ public class DataServer implements Serializable{
 		registeredUsers = new ArrayList<User>();
 		logs = new ArrayList<String>();
 		
-		User momo = new User("Momo", "lol");
+		/*User momo = new User("Momo", "lol");
 		registeredUsers.add(momo);
 		
 		User gwenn = new User("Gwenn", "lol");
-		registeredUsers.add(gwenn);
+		registeredUsers.add(gwenn);*/
 	}
 	
+	@SuppressWarnings("unchecked")
 	private List<Message> loadLog(String logRef){
 		
 		String logName = logPath + logRef;
@@ -115,6 +116,7 @@ public class DataServer implements Serializable{
 				System.out.println("server loaded");
 			}
 			
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -122,6 +124,8 @@ public class DataServer implements Serializable{
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		server.saveServer();
 
 	}
 	
