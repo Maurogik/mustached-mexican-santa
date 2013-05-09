@@ -6,13 +6,21 @@ import java.io.InputStreamReader;
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
+import remote.InterfacePrivee;
 import remote.InterfacePublique;
+import remote.Message;
 
 public class Client 
 {
+	
+	InterfacePublique iPub;
+	InterfacePrivee iPriv;
+	
 	private enum Commande{
-		PUSH, PULL, H, ERREUR;
+		PUSH, PULL, H, ERREUR, LOGIN;
 
 		public static Commande val(String s) {
 			try 
@@ -34,37 +42,72 @@ public class Client
 		
 		String[] part = inputLine.split(" ");
 
-		switch(Commande.val(part[0])){
-		case PUSH:
-			if(part.length != 1) return "ERREUR : PUSH mal formé";
-			return push();
-		case PULL:
-			if(part.length >= 3) return "ERREUR:PULL mal formé";
-			switch(part.length) {
-			case 1 : 
-				return pull(20);
-			case 2 :
-			{
-				int n = 0;
-				try{
-					n = Integer.parseInt(part[1]);
-					if(n>0)
-						return pull(n);
-					return "ERREUR: le nombre de ligne demandé doit être positif";
+		switch(Commande.val(part[0]))
+		{
+			case PUSH:
+				if(part.length < 1) return "ERREUR : PUSH mal formé";
+				String s = new String();
+				for (int i=1; i < part.length; ++i){
+					s += part[i];
+					s += " ";
 				}
-				catch (Exception NumberFormatException){
-					return pull(20, part[1]);
+				return push(s);
+			case PULL:
+				if(part.length > 3) return "ERREUR:PULL mal formé";
+				switch(part.length) {
+				case 1 : 
+					return pull(20);
+				case 2 :
+				{
+					int n = 0;
+					try{
+						n = Integer.parseInt(part[1]);
+						if(n>0)
+							return pull(n);
+						return "ERREUR: le nombre de ligne demandé doit être positif";
+					}
+					catch (Exception NumberFormatException){
+						return pull(20);
+					}
 				}
-			}
-			case 3 : 
-				return pull(Integer.parseInt(part[1]), part[2]);
-			}
-		case H:
-			if(part.length != 1) return "ERREUR: H mal formé";
-			return help();
-		default:
-			if(part[0].matches("(i?)exit")) return "exit";
-			return "ERREUR : commande invalide";
+				case 3 :
+					int n = 0;
+					try{
+						n = Integer.parseInt(part[1]);
+						if(n < 0)
+							return "ERREUR: le nombre de ligne demandé doit être positif";
+						return pullHastag(n, part[2]);
+					}
+					catch (Exception NumberFormatException){
+						return pull(20);
+					}
+				}
+			case H:
+				if(part.length != 1) return "ERREUR: H mal formé";
+				return help();
+			case LOGIN:
+				if(part.length > 3) return "ERREUR : LOGIN mal formé";
+				
+				switch(part.length) 
+				{
+					case 3 :
+					{
+						String login;
+						String password;
+						login = part[1];
+						password = part[2];
+						System.out.println("En attente d'authentification...");
+						setIPriv(iPub.login(login, password));
+						return "Connecté !";
+					}
+					
+					default :
+						return "ERREUR A LA CONNEXION";
+				}
+				
+			default:
+				if(part[0].matches("(i?)exit")) return "exit";
+				return "ERREUR : commande invalide";
 		}
 	}
 	
@@ -81,14 +124,67 @@ public class Client
 	}
 
 	/*juste les méthodes à récupérer par rmi*/
-	private String pull(int n){
-		return "le pull avec "+n+" lignes";
+	private String pull(int n) throws RemoteException{
+		if(iPriv != null){
+			ArrayList<Message> messages = (ArrayList<Message>) iPriv.getUserMessages();
+			StringBuilder s = new StringBuilder();
+			for(int i=0; i < messages.size() && i < n; ++i){
+				s.append(messages.get(i).toString());
+				s.append('\n');
+			}
+			return s.toString();
+		}
+		else {
+			return "Vous n'avez pas les privilége pour effectuer cette action, " +
+					"\nveuillez vous authentifier";
+		}
 	}
-	private String pull(int n, String auteur){
-		return "le pull avec "+n+" lignes pour l'auteur "+auteur;
+	
+	private String pullAuteur(int n, String auteur) throws RemoteException{
+		ArrayList<Message> messages = (ArrayList<Message>) iPub.getMessagesFrom(auteur);
+		StringBuilder s = new StringBuilder();
+		for(int i=0; i < messages.size() && i < n; ++i){
+			s.append(messages.get(i).toString());
+			s.append('\n');
+		}
+		return s.toString();
 	}
-	private String push() {
-		return "le push ";
+	
+	private String pullHastag(int n, String tag) throws RemoteException{
+			ArrayList<Message> messages = (ArrayList<Message>) iPub.getMessagesAbout(tag);
+			StringBuilder s = new StringBuilder();
+			for(int i=0; i < messages.size() && i < n; ++i){
+				s.append(messages.get(i).toString());
+				s.append('\n');
+			}
+			return s.toString();
+	}
+	
+	private String push(String message) throws RemoteException {
+		if(iPriv != null){
+			iPriv.postMessage(message);
+			return "Message posté !";
+		}
+		else {
+			return "Vous n'avez pas les privilége pour effectuer cette action, " +
+					"\nveuillez vous authentifier";
+		}
+	}
+	
+	public InterfacePublique getIPub(){
+		return iPub;
+	}
+	
+	public InterfacePrivee getIPriv(){
+		return iPriv;
+	}
+	
+	public void setIPub(InterfacePublique ip){
+		this.iPub = ip;
+	}
+	
+	public void setIPriv(InterfacePrivee ip){
+		this.iPriv = ip;
 	}
 	
 	public static void main(String[] args) 
@@ -98,8 +194,11 @@ public class Client
 		{
 			System.setSecurityManager(new RMISecurityManager());
 			System.out.println("-- Demarrage du Client --");
-			InterfacePublique ip = (InterfacePublique)Naming.lookup("rmi://localhost:2001/roar");
 			System.out.println("En attente du serveur...");
+			Remote r = Naming.lookup("rmi://192.168.1.98:2001/roar");
+			cl.setIPub((InterfacePublique)r);
+			System.out.println("-- Menu --");
+			cl.getIPub().echo();
 			while(true){
 				System.out.println(cl.processInput());
 			}
