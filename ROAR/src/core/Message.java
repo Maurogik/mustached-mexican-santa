@@ -8,7 +8,7 @@ import java.util.List;
 public class Message implements Serializable{
 	
 
-	private static final long serialVersionUID = 0xDEADBEEFL;
+	private static final long serialVersionUID = 0xDEADBEE;
 	
 	private List<String> authors;
 	private List<String> hashtags;

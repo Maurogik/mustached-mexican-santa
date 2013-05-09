@@ -1,13 +1,19 @@
 package core;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class AccesPublic implements InterfacePublique{
+public class AccesPublic extends UnicastRemoteObject implements InterfacePublique{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 0xDEADBEEF;
 	protected DataServer server;
 	
-	public AccesPublic(){
+	public AccesPublic() throws RemoteException{
+		super();
 		server = DataServer.getServer();
 	}
 

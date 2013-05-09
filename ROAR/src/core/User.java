@@ -6,7 +6,7 @@ import java.util.List;
 
 public class User implements Serializable{
 
-	private static final long serialVersionUID = 0xDEADFACEL;
+	private static final long serialVersionUID = 0xDEADBABE;
 	private List<User> followed;
 	private List<User> followers;
 	private List<String> interest; //followed hashtag

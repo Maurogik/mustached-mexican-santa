@@ -5,9 +5,13 @@ import java.util.List;
 
 public class AccesPrive extends AccesPublic implements InterfacePrivee{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 0xDEADFACE;
 	private String userName;
 	
-	public AccesPrive(String user){
+	public AccesPrive(String user) throws RemoteException{
 		super();
 		userName = user;
 	}
