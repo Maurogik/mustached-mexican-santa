@@ -1,16 +1,31 @@
 package core;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataServer {
+public class DataServer implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 0xC0FFEE;
+
 	private static DataServer server = null;
 	
 	private List<Message> recentMessages;
 	private List<User> registeredUsers;
 	private List<String> logs; // ancien messages sérializés
+	private static final String logPath= "./logs";
+	private static final int logSize = 20;
+	private static final String serverSave = "./server.save";
 	
 	private DataServer(){
 		recentMessages = new ArrayList<Message>();
@@ -20,18 +35,84 @@ public class DataServer {
 	
 	private List<Message> loadLog(String logRef){
 		
-		return null;
+		String logName = logPath + logRef;
+		List<Message> res = null;
+		
+		try {
+			
+			FileInputStream fis = new FileInputStream(logPath + logName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			res = (List<Message>)ois.readObject();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 	
 	private void saveNewLog(){
 		
-	}
-	
-	private void loadLogList(){
+		String logName = recentMessages.get(recentMessages.size()-1).getDate().toString();
 		
+		try {
+			
+			FileOutputStream fos = new FileOutputStream(logPath + logName);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(recentMessages);
+			logs.add(logName);
+			recentMessages.clear();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		saveServer();
 	}
 	
-	private void saveLogList(){
+	private static void loadServer(){
+		
+		try {
+			
+			FileInputStream fis = new FileInputStream(serverSave);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			DataServer temp = (DataServer)ois.readObject();
+			if(temp != null){
+				server = temp;
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	private void saveServer(){
+		
+		try {
+			
+			FileOutputStream fos;
+			fos = new FileOutputStream(serverSave);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -39,8 +120,9 @@ public class DataServer {
 	
 	public static DataServer getServer(){
 		
-		if(server == null){		
+		if(server == null){	
 			server = new DataServer();
+			loadServer();
 		}
 		
 		return server;
@@ -89,6 +171,10 @@ public class DataServer {
 		
 		for(String hash : hashTags){
 			mes.addHashtags(hash);
+		}
+		
+		if(recentMessages.size() >= logSize){
+			saveNewLog();
 		}
 	}
 	
