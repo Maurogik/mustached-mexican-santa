@@ -19,14 +19,14 @@ public class Serveur
 	{
 
 		System.setProperty("java.rmi.server.codebase", "http://localhost:2007/");
-		System.setProperty("java.rmi.server.hostname", "82.236.41.99");
+		System.setProperty("java.rmi.server.hostname", "157.169.103.58");
 
 		try {
 			AccesPublic ap = new AccesPublic();
 			String url;
 			LocateRegistry.createRegistry(2001);
 
-			url = "rmi://82.236.41.99:2001/roar";
+			url = "rmi://localhost:2001/roar";
 
 			System.out.println("Enregistrement de l'objet avec l'url : " + url);
 			Naming.rebind(url, ap);

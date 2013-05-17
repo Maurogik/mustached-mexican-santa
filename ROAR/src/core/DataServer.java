@@ -262,6 +262,18 @@ public class DataServer implements Serializable{
 		
 	}
 	
+	public List<String> getInsterestOf(String user){
+		
+		User usr = retrieveUser(user);
+		
+		if(usr == null){
+			System.out.println("Error, unknown user");
+			return null;
+		} 
+		
+		return usr.getInterest();
+	}
+	
 	public void addFollowRelationship(String follower, String followed){
 		User foler = retrieveUser(follower);
 		User foled = retrieveUser(followed);

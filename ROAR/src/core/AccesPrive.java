@@ -92,4 +92,10 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 		return userName;
 	}
 
+	@Override
+	public List<String> getInsterest() throws RemoteException {
+		
+		return server.getInsterestOf(userName);
+	}
+
 }

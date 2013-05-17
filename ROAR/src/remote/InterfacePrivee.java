@@ -13,6 +13,8 @@ public interface InterfacePrivee extends Remote
 	
 	public List<Message> getMessagesFrom(String user) throws RemoteException;
 	
+	public List<String> getInsterest() throws RemoteException;
+	
 	public List<String> getRegisteredusers() throws RemoteException;
 	
 	public List<String> getExistingHashtags() throws RemoteException;
