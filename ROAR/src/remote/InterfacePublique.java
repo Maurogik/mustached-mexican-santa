@@ -8,6 +8,8 @@ public interface InterfacePublique extends Remote
 {
 	public InterfacePrivee login(String login, String mdp) throws RemoteException;
 	
+	public boolean register(String login, String mdp) throws RemoteException;
+	
 	public List<Message> getMessagesAbout(String hashtag) throws RemoteException;
 	
 	public List<Message> getMessagesFrom(String user) throws RemoteException;

@@ -26,7 +26,7 @@ public class Serveur
 			String url;
 			LocateRegistry.createRegistry(2001);
 
-			url = "rmi://localhost:2001/roar";
+			url = "rmi://157.169.103.58:2001/roar";
 
 			System.out.println("Enregistrement de l'objet avec l'url : " + url);
 			Naming.rebind(url, ap);

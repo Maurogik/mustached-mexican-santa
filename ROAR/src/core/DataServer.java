@@ -177,12 +177,28 @@ public class DataServer implements Serializable{
 		
 		System.out.println("Login "+pseudo+" pass "+passw + " requested");
 		User us = retrieveUser(pseudo);
+		if(us == null){
+			return false;
+		}
 		boolean res = us.getPassword().equals(passw);
 		
 		System.out.println("sucess : "+ res);
 		
 		return res;
 		
+	}
+	
+	public boolean registerUser(String pseudo, String passw){
+		
+		User us = retrieveUser(pseudo);
+		if(us != null){
+			return false;
+		}
+		
+		us = new User(pseudo, passw);
+		
+		registeredUsers.add(us);
+		return true;
 	}
 	
 	public List<String> getRegisteredUsers(){

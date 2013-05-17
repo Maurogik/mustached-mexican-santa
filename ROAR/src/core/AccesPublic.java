@@ -62,4 +62,9 @@ public class AccesPublic extends UnicastRemoteObject implements InterfacePubliqu
 		System.out.println("Hey !");
 	}
 
+	@Override
+	public boolean register(String login, String mdp) throws RemoteException {
+		return server.registerUser(login, mdp);
+	}
+
 }
