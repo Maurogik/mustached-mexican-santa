@@ -198,11 +198,11 @@ public class Client
 			System.setSecurityManager(new RMISecurityManager());
 			System.out.println("-- Demarrage du Client --");
 			System.out.println("En attente du serveur...");
-			Remote r = Naming.lookup("rmi://192.168.1.75:2001/roar");
+			Remote r = Naming.lookup("rmi://localhost:2001/roar");
 			cl.setIPub((InterfacePublique)r);
 			System.out.println("Debut");
 			cl.getIPub().echo();
-			EventQueue.invokeLater(new Runnable() {
+			/*EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
 						MainWindow frame = new MainWindow();
@@ -211,7 +211,11 @@ public class Client
 						e.printStackTrace();
 					}
 				}
-			});
+			});*/
+			
+			while(true){
+				cl.processInput();
+			}
 		}
 		catch (Exception e)
 		{
