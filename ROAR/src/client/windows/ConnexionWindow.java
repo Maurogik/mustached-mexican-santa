@@ -20,7 +20,7 @@ import client.Client;
 public class ConnexionWindow extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textField; 
 	private JPasswordField passwordField;
 
 	/**

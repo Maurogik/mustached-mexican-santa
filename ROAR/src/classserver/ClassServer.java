@@ -3,7 +3,7 @@ package classserver;
 /**
  * ClassServer is an abstract class that provides the
  * basic functionality of a mini-webserver, specialized
- * to load class files only. A ClassServer must be extended
+ * to load class files only. A ClassServer  must be extended
  * and the concrete subclass should define the <b>getBytes</b>
  * method which is responsible for retrieving the bytecodes
  * for a class.<p>

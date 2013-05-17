@@ -78,7 +78,7 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 	public void follow(String userToFollow) throws RemoteException {
 		
 		server.addFollowRelationship(userName, userToFollow);
-	}
+	} 
 
 	@Override
 	public void addInterest(String interest) throws RemoteException {

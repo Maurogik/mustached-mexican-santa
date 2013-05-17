@@ -20,7 +20,7 @@ public class Client
 {
 
 	public static InterfacePublique iPub;
-	public static InterfacePrivee iPriv;
+	public static InterfacePrivee iPriv; 
 
 	private enum Commande{
 		PUSH, PULL, H, ERREUR, LOGIN;

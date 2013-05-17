@@ -17,7 +17,7 @@ import javax.swing.JButton;
 public class MainWindow extends JFrame {
 
 	private JPanel contentPane;
-	
+	 
 	/**
 	 * Create the frame.
 	 */

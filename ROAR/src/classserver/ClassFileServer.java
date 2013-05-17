@@ -2,7 +2,7 @@ package classserver;
 
 /**
  * The ClassFileServer implements a ClassServer that
- * reads class files from the file system. See the
+ * reads class files from the file system . See the
  * doc for the "Main" method for how to run this
  * server.
  */

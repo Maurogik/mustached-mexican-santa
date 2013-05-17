@@ -18,7 +18,7 @@ public interface InterfacePrivee extends Remote
 	public List<String> getRegisteredusers() throws RemoteException;
 	
 	public List<String> getExistingHashtags() throws RemoteException;
-	
+	 
 	//PARTIE PRIVEE
 	
 	public List<Message> getUserMessages() throws RemoteException;

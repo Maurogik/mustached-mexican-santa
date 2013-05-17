@@ -20,7 +20,7 @@ public class User implements Serializable{
 		followed = new ArrayList<User>();
 		followers = new ArrayList<User>();
 		interest = new ArrayList<String>();
-	}
+	} 
 
 
 	public List<User> getFollowed() {

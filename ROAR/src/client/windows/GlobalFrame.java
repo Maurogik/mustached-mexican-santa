@@ -11,7 +11,7 @@ public class GlobalFrame extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
+	/** 
 	 * Create the frame.
 	 */
 	public GlobalFrame() {

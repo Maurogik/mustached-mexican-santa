@@ -21,7 +21,7 @@ public class AccesPublic extends UnicastRemoteObject implements InterfacePubliqu
 		super();
 		server = DataServer.getServer();
 	}
-
+ 
 	@Override
 	public InterfacePrivee login(String login, String mdp)
 			throws RemoteException {

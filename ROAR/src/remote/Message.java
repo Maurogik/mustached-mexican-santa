@@ -17,7 +17,7 @@ public class Message implements Serializable, Comparable<Message>{
 	private List<String> recipient;
 	private Date date;
 	private long id;
-	
+	 
 	
 	public Message(long iD, String autho, String cont){
 		
