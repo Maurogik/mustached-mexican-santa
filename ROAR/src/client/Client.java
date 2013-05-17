@@ -9,112 +9,102 @@ import java.rmi.RMISecurityManager;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import client.windows.MainWindow;
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 
 import remote.InterfacePrivee;
 import remote.InterfacePublique;
 import remote.Message;
 
-public class Client
+
+import client.windows.MainWindow;
+
+public class Client 
 {
-
+	
 	public static InterfacePublique iPub;
-	public static InterfacePrivee iPriv; 
-
+	public static InterfacePrivee iPriv;
+	public String login;
+	
 	private enum Commande{
 		PUSH, PULL, H, ERREUR, LOGIN;
 
 		public static Commande val(String s) {
-			try
+			try 
 			{
 				return valueOf(s);
-			}
+			} 
 			catch(IllegalArgumentException e)
 			{
 				return ERREUR;
 			}
 		}
 	}
-
-	public String processInput() throws IOException
+	
+	public String processInput() throws IOException 
 	{
-		InputStreamReader isr=new InputStreamReader(System.in);
-		BufferedReader br=new BufferedReader(isr);
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
 		String inputLine = br.readLine();
-
+		
 		String[] part = inputLine.split(" ");
 
-		switch(Commande.val(part[0]))
+		switch(Integer.decode(part[0]))
 		{
-		case PUSH:
-			if(part.length < 1) return "ERREUR : PUSH mal formé";
-			String s = new String();
-			for (int i=1; i < part.length; ++i){
-				s += part[i];
-				s += " ";
-			}
-			return push(s);
-		case PULL:
-			if(part.length > 3) return "ERREUR:PULL mal formé";
-			switch(part.length) {
-			case 1 :
-				return pull(20);
-			case 2 :
-			{
-				int n = 0;
-				try{
-					n = Integer.parseInt(part[1]);
-					if(n>0)
-						return pull(n);
-					return "ERREUR: le nombre de ligne demandé doit être positif";
-				}
-				catch (Exception NumberFormatException){
-					return pull(20);
-				}
-			}
-			case 3 :
-				int n = 0;
-				try{
-					n = Integer.parseInt(part[1]);
-					if(n < 0)
-						return "ERREUR: le nombre de ligne demandé doit être positif";
-					return pullHastag(n, part[2]);
-				}
-				catch (Exception NumberFormatException){
-					return pull(20);
-				}
-			}
-		case H:
-			if(part.length != 1) return "ERREUR: H mal formé";
-			return help();
-		case LOGIN:
-			if(part.length > 3) return "ERREUR : LOGIN mal formé";
-
-			switch(part.length)
-			{
-			case 3 :
-			{
-				String login;
-				String password;
-				login = part[1];
-				password = part[2];
-				System.out.println("En attente d'authentification...");
-				setIPriv(iPub.login(login, password));
-				return "Connecté !";
-			}
-
-			default :
-				return "ERREUR A LA CONNEXION";
-			}
-
-		default:
-			if(part[0].matches("(i?)exit")) return "exit";
-			return "ERREUR : commande invalide";
+			case 1:
+				return login();
+			case 2:
+				return inscription();
+			case 3:
+				return rechercher();
+			default:
+				System.exit(0);
+				return "";
 		}
 	}
 
-	private String help() {
+	public String menuDisconnect() {
+		StringBuilder s = new StringBuilder();
+		s.append("\t\t===== MENU ====\n");
+		s.append("1. Connexion\n");
+		s.append("2. S'inscrire\n");
+		s.append("3. Rechercher (#RoarTag ou @Auteur)\n");
+		s.append("4. Quitter\n");
+		s.append(">> ");
+		
+		return s.toString();
+	}
+	
+	public String recherche() {
+		StringBuilder s = new StringBuilder();
+		s.append("\t ===== RECHERCHE ====\n");
+		s.append("1. Lister #RoarTag existants\n");
+		s.append("2. Rechercher messages par RoarTag\n");
+		s.append("3. Lister @Auteurs existants\n");
+		s.append("4. Rechercher messages par auteurs\n");
+		s.append("5. Retour\n");
+		s.append(">> ");
+		
+		return s.toString();
+	}
+	
+	public String menuConnect() {
+		StringBuilder s = new StringBuilder();
+		s.append("\t\t===== Bienvenue "+ this.login +" ====\n");
+		s.append("1. Messages récents\n");
+		s.append("2. Ecrire message\n");
+		s.append("3. Suivre un utilisateur\n");
+		s.append("4. Mes interets\n");
+		s.append("5. Rechercher (RoarTag ou Auteur)\n");
+		s.append("6. Quitter\n");
+		s.append(">> ");
+		
+		return s.toString();
+	}
+	
+	public String help() {
 		return ("Commande possible : \n" +
 				"PUSH <- permet de rentrer un message\n" +
 				"PULL <- permet de lire les 20 derniers messages sur son mur\n" +
@@ -124,6 +114,94 @@ public class Client
 				"H <- renvoit le menu\n" +
 				"EXIT <- permet au client de se déconnecter du serveur\n" +
 				"\n\n" );
+	}
+	
+	public String login() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		String inputLine = br.readLine();
+		
+		System.out.println("Entrez votre login : ");
+		inputLine = br.readLine();
+		String login = inputLine;
+		System.out.println("Entrez votre mot de passe");
+		inputLine = br.readLine();
+		String password = inputLine;
+		
+		System.out.println("En attente d'authentification...");
+		setIPriv(iPub.login(login, password));
+		this.login = login;
+		if(iPriv != null)
+			return "Connect� !";
+		else
+			return "Erreur lors du login";
+	}
+	
+	private String inscription() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		String inputLine = br.readLine();
+		
+		System.out.println("Entrez votre login : ");
+		inputLine = br.readLine();
+		String login = inputLine;
+		System.out.println("Entrez votre mot de passe");
+		inputLine = br.readLine();
+		String password = inputLine;
+		
+		System.out.println("En attente d'inscription...");
+		if(iPub.register(login, password))
+			return "Inscription valid�e !";
+		else
+			return "Erreur lors de l'inscription";
+	}
+	
+	public String rechercher() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		String inputLine = br.readLine();
+		StringBuilder s = new StringBuilder();
+		
+		System.out.println(recherche());
+		inputLine = br.readLine();
+		String[] part = inputLine.split(" ");
+		switch(Integer.decode(part[0]))
+		{
+			case 1:
+				for(String str : iPub.getExistingHashtags()) {
+					System.out.println(str = "\n");
+				}
+				return rechercher();
+			case 2:
+				System.out.println("Entrez le roartag � rechercher >> ");
+				inputLine = br.readLine();
+				break;
+			case 3:
+				for(String str : iPub.getRegisteredusers()) {
+					System.out.println(str = "\n");
+				}
+				return rechercher();
+			case 4:
+				System.out.println("Entrez l'auteur � rechercher >> ");
+				inputLine = br.readLine();
+				break;
+		}
+		
+		System.out.println("Recherche en cours...");
+		Pattern p = Pattern .compile("@([a-z]|[A-Z])+");
+		  
+		Matcher m = p.matcher(inputLine);
+	   
+		if (m.find()){
+			return pullAuteur(20, inputLine.substring(m.start(), m.end()));
+		}
+		p = Pattern .compile("#([a-z]|[A-Z])+");
+		m = p.matcher(inputLine);
+		if (m.find()){
+		  return pullHastag(20, inputLine.substring(m.start(), m.end()));
+	   }
+		
+		return "Erreur";
 	}
 
 	/*juste les méthodes à récupérer par rmi*/
@@ -142,7 +220,7 @@ public class Client
 					"\nveuillez vous authentifier";
 		}
 	}
-
+	
 	private String pullAuteur(int n, String auteur) throws RemoteException{
 		ArrayList<Message> messages = (ArrayList<Message>) iPub.getMessagesFrom(auteur);
 		StringBuilder s = new StringBuilder();
@@ -152,17 +230,17 @@ public class Client
 		}
 		return s.toString();
 	}
-
+	
 	private String pullHastag(int n, String tag) throws RemoteException{
-		ArrayList<Message> messages = (ArrayList<Message>) iPub.getMessagesAbout(tag);
-		StringBuilder s = new StringBuilder();
-		for(int i=0; i < messages.size() && i < n; ++i){
-			s.append(messages.get(i).toString());
-			s.append('\n');
-		}
-		return s.toString();
+			ArrayList<Message> messages = (ArrayList<Message>) iPub.getMessagesAbout(tag);
+			StringBuilder s = new StringBuilder();
+			for(int i=0; i < messages.size() && i < n; ++i){
+				s.append(messages.get(i).toString());
+				s.append('\n');
+			}
+			return s.toString();
 	}
-
+	
 	private String push(String message) throws RemoteException {
 		if(iPriv != null){
 			iPriv.postMessage(message);
@@ -173,51 +251,47 @@ public class Client
 					"\nveuillez vous authentifier";
 		}
 	}
-
+	
 	public InterfacePublique getIPub(){
 		return iPub;
 	}
-
+	
 	public InterfacePrivee getIPriv(){
 		return iPriv;
 	}
-
+	
 	public void setIPub(InterfacePublique ip){
 		this.iPub = ip;
 	}
-
+	
 	public void setIPriv(InterfacePrivee ip){
 		this.iPriv = ip;
 	}
-
-	public static void main(String[] args)
+	
+	public static void main(String[] args) 
 	{
+		System.setProperty("java.security.policy", "./src/client/policy");
 		Client cl = new Client();
-		try
+		try 
 		{
 			System.setSecurityManager(new RMISecurityManager());
 			System.out.println("-- Demarrage du Client --");
 			System.out.println("En attente du serveur...");
-			Remote r = Naming.lookup("rmi://localhost:2001/roar");
+			Remote r = Naming.lookup("rmi://157.169.103.58:2001/roar");
 			cl.setIPub((InterfacePublique)r);
 			System.out.println("Debut");
 			cl.getIPub().echo();
-			/*EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						MainWindow frame = new MainWindow();
-						frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			while(true) {
+				if(cl.getIPriv() == null) {
+					System.out.println(cl.menuDisconnect());
 				}
-			});*/
-			
-			while(true){
-				cl.processInput();
+				else {
+					System.out.println(cl.menuConnect());
+				}
+				System.out.println(cl.processInput());
 			}
-		}
-		catch (Exception e)
+		} 
+		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
