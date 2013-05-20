@@ -24,6 +24,10 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 		super();
 		userName = user;
 	}
+	public AccesPrive() throws RemoteException{
+		super();
+		userName = null;
+	}
 	
 	@Override
 	public List<Message> getUserMessages() throws RemoteException {

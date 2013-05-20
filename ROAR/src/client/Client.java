@@ -4,7 +4,9 @@ import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -12,7 +14,13 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.security.auth.login.LoginException;
+
+import authentify.*;
+
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
+
+import core.AccesPrive;
 
 import remote.InterfacePrivee;
 import remote.InterfacePublique;
@@ -132,7 +140,47 @@ public class Client
 		setIPriv(iPub.login(login, password));
 		this.login = login;
 		if(iPriv != null)
-			return "Connect !";
+			return "Connectï¿½ !";
+		else
+			return "Erreur lors du login";
+	}
+	public String loginBis() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		String inputLine = br.readLine();
+		
+		System.out.println("Entrez votre login : ");
+		inputLine = br.readLine();
+		String login = inputLine;
+		System.out.println("Entrez votre mot de passe");
+		inputLine = br.readLine();
+		String password = inputLine;
+		
+		System.out.println("En attente d'authentification...");
+		ConnexionServeur cs=null; // cs est un stub vers l objet remote, obtenu par le lookup
+		try {
+			cs = (ConnexionServeur)Naming.lookup("rmi://157.169.103.58:2001/roar"); 
+				// rechercher sur cette machine, localhost, un objet remote offrant un service de connexion 
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			e.printStackTrace();
+		}
+		AccesPrive acces=null;
+		try {
+			acces=(AccesPrive) cs.logon(login, password); 
+		setIPriv(acces);
+		this.login = login;
+		}catch (RemoteException e) {
+			e.printStackTrace();
+		}		catch (LoginException e) {
+			e.printStackTrace();
+			System.out.println("Dommage, mauvais login et mot de passe, Recommencez !");
+		}
+		if(iPriv != null)
+			return "Connectï¿½ !";
 		else
 			return "Erreur lors du login";
 	}
@@ -151,7 +199,7 @@ public class Client
 		
 		System.out.println("En attente d'inscription...");
 		if(iPub.register(login, password))
-			return "Inscription valide !";
+			return "Inscription validï¿½e !";
 		else
 			return "Erreur lors de l'inscription";
 	}
@@ -173,7 +221,7 @@ public class Client
 				}
 				return rechercher();
 			case 2:
-				System.out.println("Entrez le roartag ˆ rechercher >> ");
+				System.out.println("Entrez le roartag ï¿½ rechercher >> ");
 				inputLine = br.readLine();
 				break;
 			case 3:
@@ -182,7 +230,7 @@ public class Client
 				}
 				return rechercher();
 			case 4:
-				System.out.println("Entrez l'auteur ˆ rechercher >> ");
+				System.out.println("Entrez l'auteur ï¿½ rechercher >> ");
 				inputLine = br.readLine();
 				break;
 		}
