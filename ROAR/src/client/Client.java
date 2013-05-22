@@ -53,7 +53,7 @@ public class Client
 		}
 	}
 	
-	public String processInput() throws IOException 
+	public String processInputDisconnect() throws IOException 
 	{
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
@@ -68,6 +68,33 @@ public class Client
 			case 2:
 				return inscription();
 			case 3:
+				return rechercher();
+			default:
+				System.exit(0);
+				return "";
+		}
+	}
+	
+	public String processInputConnect() throws IOException 
+	{
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		String inputLine = br.readLine();
+		
+		String[] part = inputLine.split(" ");
+
+		switch(Integer.decode(part[0]))
+		{
+			case 1:
+				return list();
+			case 2:
+				return write();
+			case 3:
+				return follow();
+			case 4:
+				//return interet();
+				return "Pas implémenté";
+			case 5:
 				return rechercher();
 			default:
 				System.exit(0);
@@ -241,7 +268,7 @@ public class Client
 		Pattern p = Pattern .compile("@([a-z]|[A-Z])+");
 		  
 		Matcher m = p.matcher(inputLine);
-	   
+		
 		if (m.find()){
 			return pullAuteur(20, inputLine.substring(m.start(), m.end()));
 		}
@@ -249,9 +276,37 @@ public class Client
 		m = p.matcher(inputLine);
 		if (m.find()){
 		  return pullHastag(20, inputLine.substring(m.start(), m.end()));
-	   }
+		}
 		
 		return "Erreur";
+	}
+	
+	public String list() throws RemoteException {
+		ArrayList<Message> messages = (ArrayList<Message>) iPriv.getUserMessages();
+		StringBuilder s = new StringBuilder();
+		for(int i=0; i < messages.size() && i < 20; ++i){
+			s.append(messages.get(i).toString());
+			s.append('\n');
+		}
+		return s.toString();
+	}
+	
+	public String write() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		System.out.println("Entrez votre message >> ");
+		String inputLine = br.readLine();
+		iPriv.postMessage(inputLine);
+		return "Message posté !";
+	}
+	
+	public String follow() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		System.out.println("Entrez l'utilisateur a follow >> ");
+		String inputLine = br.readLine();
+		iPriv.follow(inputLine);
+		return "Utilisateur suivi !";
 	}
 
 	/*juste les méthodes à récupérer par rmi*/
@@ -336,11 +391,13 @@ public class Client
 			while(true) {
 				if(cl.getIPriv() == null) {
 					System.out.println(cl.menuDisconnect());
+					System.out.println(cl.processInputDisconnect());
 				}
 				else {
 					System.out.println(cl.menuConnect());
+					System.out.println(cl.processInputConnect());
 				}
-				System.out.println(cl.processInput());
+				
 			}
 		} 
 		catch (Exception e) 
