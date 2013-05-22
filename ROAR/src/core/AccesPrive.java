@@ -49,7 +49,7 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 			   
 			   while (m.find()){
 				   
-				  recip.add(mes.substring(m.start(), m.end()));
+				  recip.add(mes.substring(m.start()+1, m.end()));
 			      System.out.println(mes.substring(m.start(), m.end()));
 			      
 			   }
@@ -61,7 +61,7 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 			   
 			   while (m2.find()){
 				   
-				  hashT.add(mes.substring(m2.start(), m2.end()));
+				  hashT.add(mes.substring(m2.start()+1, m2.end()));
 			      System.out.println(mes.substring(m2.start(), m2.end()));
 			      
 			   }

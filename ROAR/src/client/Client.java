@@ -25,11 +25,12 @@ import core.AccesPrive;
 import remote.InterfacePrivee;
 import remote.InterfacePublique;
 import remote.Message;
+import remote.clientInterface;
 
 
 import client.windows.MainWindow;
 
-public class Client 
+public class Client implements clientInterface
 {
 	
 	public static String ip = "localhost";
@@ -37,6 +38,7 @@ public class Client
 	public static InterfacePublique iPub;
 	public static InterfacePrivee iPriv;
 	public String login;
+	public boolean finished;
 	
 	private enum Commande{
 		PUSH, PULL, H, ERREUR, LOGIN;
@@ -156,7 +158,7 @@ public class Client
 	public String login() throws IOException {
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
-		String inputLine = br.readLine(); 
+		String inputLine; 
 		
 		System.out.println("Entrez votre login : ");
 		inputLine = br.readLine();
@@ -176,7 +178,7 @@ public class Client
 	public String loginBis() throws IOException {
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
-		String inputLine = br.readLine();
+		String inputLine;
 		
 		System.out.println("Entrez votre login : ");
 		inputLine = br.readLine();
@@ -217,7 +219,7 @@ public class Client
 	private String inscription() throws IOException {
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
-		String inputLine = br.readLine();
+		String inputLine;
 		
 		System.out.println("Entrez votre login : ");
 		inputLine = br.readLine();
@@ -236,8 +238,7 @@ public class Client
 	public String rechercher() throws IOException {
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
-		String inputLine = br.readLine();
-		StringBuilder s = new StringBuilder();
+		String inputLine;
 		
 		System.out.println(recherche());
 		inputLine = br.readLine();
@@ -270,25 +271,19 @@ public class Client
 		Matcher m = p.matcher(inputLine);
 		
 		if (m.find()){
-			return pullAuteur(20, inputLine.substring(m.start(), m.end()));
+			return pullAuteur(20, inputLine.substring(m.start()+1, m.end()));
 		}
 		p = Pattern .compile("#([a-z]|[A-Z])+");
 		m = p.matcher(inputLine);
 		if (m.find()){
-		  return pullHastag(20, inputLine.substring(m.start(), m.end()));
+		  return pullHastag(20, inputLine.substring(m.start()+1, m.end()));
 		}
 		
 		return "Erreur";
 	}
 	
 	public String list() throws RemoteException {
-		ArrayList<Message> messages = (ArrayList<Message>) iPriv.getUserMessages();
-		StringBuilder s = new StringBuilder();
-		for(int i=0; i < messages.size() && i < 20; ++i){
-			s.append(messages.get(i).toString());
-			s.append('\n');
-		}
-		return s.toString();
+		return pull(20);
 	}
 	
 	public String write() throws IOException {
@@ -311,8 +306,12 @@ public class Client
 
 	/*juste les méthodes à récupérer par rmi*/
 	private String pull(int n) throws RemoteException{
+		ArrayList<Message> messages = new ArrayList<Message>();
 		if(iPriv != null){
-			ArrayList<Message> messages = (ArrayList<Message>) iPriv.getUserMessages();
+			while(!finished) {
+				messages.addAll((ArrayList<Message>) iPriv.getUserMessages());
+			}
+			finished = false;
 			StringBuilder s = new StringBuilder();
 			for(int i=0; i < messages.size() && i < n; ++i){
 				s.append(messages.get(i).toString());
@@ -375,7 +374,7 @@ public class Client
 	
 	public static void main(String[] args) 
 	{
-		System.setProperty("java.security.policy", "./src/client/policy");
+		System.setProperty("java.security.policy", "./policy");
 
 
 		Client cl = new Client();
@@ -404,5 +403,10 @@ public class Client
 		{
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void pullFinished() {
+		finished = true;
 	}
 }
