@@ -67,7 +67,7 @@ public class SimpleMonServeurLoginModule implements LoginModule {
 
 	// initial state
 	private Subject subject;
-	private CallbackHandler callbackHandler;
+	private CallbackHandler callbackHandler; 
 	private Map sharedState;
 	private Map options;
 
@@ -85,7 +85,7 @@ public class SimpleMonServeurLoginModule implements LoginModule {
 	// testUser's SamplePrincipal
 	//To Improve
 	private SamplePrincipal userPrincipal;
-
+ 
 	/**
 	 * Initialize this <code>LoginModule</code>.
 	 *

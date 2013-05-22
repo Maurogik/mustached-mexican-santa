@@ -19,7 +19,7 @@ public class MainWindow extends JFrame {
 	private JPanel contentPane;
 	 
 	/**
-	 * Create the frame.
+	 * Create the frame. 
 	 */
 	public MainWindow() {
 		setResizable(false);

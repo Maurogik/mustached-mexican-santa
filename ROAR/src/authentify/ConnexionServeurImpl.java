@@ -1,5 +1,6 @@
 package authentify;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -11,11 +12,11 @@ import core.AccesPrive;
 import remote.InterfacePrivee;
 
 
-public class ConnexionServeurImpl extends UnicastRemoteObject implements ConnexionServeur {
+public class ConnexionServeurImpl extends UnicastRemoteObject implements ConnexionServeur, Serializable {
 	private static final long serialVersionUID = 1L;
 
-	protected ConnexionServeurImpl() throws RemoteException {
-		super();
+	public ConnexionServeurImpl() throws RemoteException {
+		super(); 
 	}
 
 	private AccesPrive acces=new AccesPrive();

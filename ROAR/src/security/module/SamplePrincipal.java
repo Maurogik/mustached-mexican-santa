@@ -10,7 +10,7 @@ public class SamplePrincipal implements java.security.Principal, java.io.Seriali
 	public SamplePrincipal(String name){
 		this.name=name;
 	}
-	@Override
+	@Override 
 	public String getName() {
 		// TODO Auto-generated method stub
 		return name;
