@@ -33,6 +33,7 @@ public class DataServer implements Serializable{
 	private List<String> logs; // ancien messages sérializés
 	private static final String logPath= "./logs";
 	private static final int logSize = 10;
+	private static final int sizeToSave = 3;
 	private static final String serverSave = "./server.save";
 	
 	private long lastMessageID = 0;
@@ -198,6 +199,9 @@ public class DataServer implements Serializable{
 		us = new User(pseudo, passw);
 		
 		registeredUsers.add(us);
+		
+		saveServer();
+		
 		return true;
 	}
 	 
@@ -245,7 +249,7 @@ public class DataServer implements Serializable{
 		
 		recentMessages.add(mes);
 		
-		if(recentMessages.size() >= logSize){
+		if(recentMessages.size() >= sizeToSave){
 			saveNewLog();
 		}
 		
