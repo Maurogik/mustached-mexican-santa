@@ -435,7 +435,7 @@ public class DataServer implements Serializable{
 		Collections.sort(res);
 		
 		try{
-			if(cl.getNbMessageRead() > nbMessages){
+			if(cl.getNbMessageRead() >= nbMessages){
 				res = res.subList(cl.getNbMessageRead(), cl.getNbMessageRead()+5);
 			} else {
 				cl.pullFinished();
