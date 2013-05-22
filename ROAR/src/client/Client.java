@@ -32,6 +32,8 @@ import client.windows.MainWindow;
 public class Client 
 {
 	
+	public static String ip = "localhost";
+	
 	public static InterfacePublique iPub;
 	public static InterfacePrivee iPriv;
 	public String login;
@@ -62,7 +64,7 @@ public class Client
 		switch(Integer.decode(part[0]))
 		{
 			case 1:
-				return login();
+				return loginBis();
 			case 2:
 				return inscription();
 			case 3:
@@ -159,7 +161,7 @@ public class Client
 		System.out.println("En attente d'authentification...");
 		ConnexionServeur cs=null; // cs est un stub vers l objet remote, obtenu par le lookup
 		try {
-			cs = (ConnexionServeur)Naming.lookup("rmi://157.169.103.58:2001/roar"); 
+			cs = (ConnexionServeur)Naming.lookup("rmi://"+ip+":2001/roar2"); 
 				// rechercher sur cette machine, localhost, un objet remote offrant un service de connexion 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -168,9 +170,9 @@ public class Client
 		} catch (NotBoundException e) {
 			e.printStackTrace();
 		}
-		AccesPrive acces=null;
+		InterfacePrivee acces=null;
 		try {
-			acces=(AccesPrive) cs.logon(login, password); 
+			acces=(InterfacePrivee) cs.logon(login, password); 
 		setIPriv(acces);
 		this.login = login;
 		}catch (RemoteException e) {
@@ -319,13 +321,15 @@ public class Client
 	public static void main(String[] args) 
 	{
 		System.setProperty("java.security.policy", "./src/client/policy");
+
+
 		Client cl = new Client();
 		try 
 		{
 			System.setSecurityManager(new RMISecurityManager());
 			System.out.println("-- Demarrage du Client --");
 			System.out.println("En attente du serveur...");
-			Remote r = Naming.lookup("rmi://157.169.103.58:2001/roar");
+			Remote r = Naming.lookup("rmi://"+ip+":2001/roar");
 			cl.setIPub((InterfacePublique)r);
 			System.out.println("Debut");
 			cl.getIPub().echo();
