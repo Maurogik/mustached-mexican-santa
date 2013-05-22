@@ -437,6 +437,8 @@ public class DataServer implements Serializable{
 		try{
 			if(cl.getNbMessageRead() > nbMessages){
 				res = res.subList(cl.getNbMessageRead(), cl.getNbMessageRead()+5);
+			} else {
+				cl.pullFinished();
 			}
 		} catch (Exception e) {
 			System.out.println("error dnas get user message");
