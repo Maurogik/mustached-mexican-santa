@@ -16,7 +16,7 @@ public class ConnexionServeurImpl extends UnicastRemoteObject implements Connexi
 	private static final long serialVersionUID = 1L;
 
 	public ConnexionServeurImpl() throws RemoteException {
-		super();
+		super(); 
 	}
 
 	private AccesPrive acces=new AccesPrive();

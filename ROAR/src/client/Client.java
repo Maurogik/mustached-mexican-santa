@@ -129,14 +129,14 @@ public class Client
 	public String login() throws IOException {
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
-		String inputLine = br.readLine();
+		String inputLine = br.readLine(); 
 		
 		System.out.println("Entrez votre login : ");
 		inputLine = br.readLine();
 		String login = inputLine;
 		System.out.println("Entrez votre mot de passe");
 		inputLine = br.readLine();
-		String password = inputLine;
+		String password = inputLine; 
 		
 		System.out.println("En attente d'authentification...");
 		setIPriv(iPub.login(login, password));

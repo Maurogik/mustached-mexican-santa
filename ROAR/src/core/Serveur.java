@@ -6,7 +6,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List; 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -29,11 +29,11 @@ public class Serveur
 			String url;
 			LocateRegistry.createRegistry(2001);
 
-			url = "rmi://localhost:2001";
+			url = "rmi://localhost:2001"; 
 			ConnexionServeurImpl conServImpl = new ConnexionServeurImpl();
 			System.out.println("Enregistrement de l'objet avec l'url : " + url+  "/roar");
 			Naming.rebind(url+"/roar", ap);
-			Naming.rebind(url+"/roar2", conServImpl);
+			Naming.rebind(url+"/roar2", conServImpl); 
 			System.out.println("rebind done");
 			new ClassFileServer(2007, "bin/");
 		}
@@ -41,7 +41,7 @@ public class Serveur
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block 
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
