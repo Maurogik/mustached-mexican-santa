@@ -140,7 +140,7 @@ public class Client
 		setIPriv(iPub.login(login, password));
 		this.login = login;
 		if(iPriv != null)
-			return "Connect� !";
+			return "Connecté !";
 		else
 			return "Erreur lors du login";
 	}
@@ -180,7 +180,7 @@ public class Client
 			System.out.println("Dommage, mauvais login et mot de passe, Recommencez !");
 		}
 		if(iPriv != null)
-			return "Connect� !";
+			return "Connecté !";
 		else
 			return "Erreur lors du login";
 	}
@@ -199,7 +199,7 @@ public class Client
 		
 		System.out.println("En attente d'inscription...");
 		if(iPub.register(login, password))
-			return "Inscription valid�e !";
+			return "Inscription validée !";
 		else
 			return "Erreur lors de l'inscription";
 	}
@@ -221,7 +221,7 @@ public class Client
 				}
 				return rechercher();
 			case 2:
-				System.out.println("Entrez le roartag � rechercher >> ");
+				System.out.println("Entrez le roartag à rechercher >> ");
 				inputLine = br.readLine();
 				break;
 			case 3:
@@ -230,7 +230,7 @@ public class Client
 				}
 				return rechercher();
 			case 4:
-				System.out.println("Entrez l'auteur � rechercher >> ");
+				System.out.println("Entrez l'auteur à rechercher >> ");
 				inputLine = br.readLine();
 				break;
 		}
