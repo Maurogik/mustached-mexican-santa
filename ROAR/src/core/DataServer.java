@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import remote.Message;
 import remote.User;
+import remote.clientInterface;
 
 
 public class DataServer implements Serializable{
@@ -32,7 +33,7 @@ public class DataServer implements Serializable{
 	private List<User> registeredUsers;
 	private List<String> logs; // ancien messages sérializés
 	private static final String logPath= "./logs";
-	private static final int logSize = 10;
+	private static final int logSize = 50;
 	private static final int sizeToSave = 3;
 	private static final String serverSave = "./server.save";
 	
@@ -42,12 +43,6 @@ public class DataServer implements Serializable{
 		recentMessages = new ArrayList<Message>();
 		registeredUsers = new ArrayList<User>();
 		logs = new ArrayList<String>();
-		
-		/*User momo = new User("Momo", "lol");
-		registeredUsers.add(momo);
-		
-		User gwenn = new User("Gwenn", "lol");
-		registeredUsers.add(gwenn);*/
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -249,8 +244,12 @@ public class DataServer implements Serializable{
 		
 		recentMessages.add(mes);
 		
-		if(recentMessages.size() >= sizeToSave){
+		if(recentMessages.size() >= logSize){
 			saveNewLog();
+		}
+		
+		if(recentMessages.size() >= sizeToSave){
+			saveServer();
 		}
 		
 		System.out.println("message from "+author+" posted");
@@ -407,7 +406,7 @@ public class DataServer implements Serializable{
 		return res;
 	}
 	
-	public List<Message> getUserMessages(String user, int nbMessages){
+	public List<Message> getUserMessages(String user, int nbMessages, clientInterface cl){
 		List<Message> res = new ArrayList<Message>();
 		
 		User usr = retrieveUser(user);
@@ -432,15 +431,17 @@ public class DataServer implements Serializable{
 		
 		res.addAll(getMessagesTo(usr.getName(), nbMessages));
 		
-		//Tri par date
-		//TODO 
-		//garder seulement nbMessages
 		
 		Collections.sort(res);
 		
-		if(res.size() > nbMessages){
-			res = res.subList(0, nbMessages);
+		try{
+			if(cl.getNbMessageRead() > nbMessages){
+				res = res.subList(cl.getNbMessageRead(), cl.getNbMessageRead()+5);
+			}
+		} catch (Exception e) {
+			System.out.println("error dnas get user message");
 		}
+
 		
 		System.out.println("get user messages requested");
 		

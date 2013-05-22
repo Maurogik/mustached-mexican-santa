@@ -21,7 +21,7 @@ public interface InterfacePrivee extends Remote
 	 
 	//PARTIE PRIVEE
 	
-	public List<Message> getUserMessages() throws RemoteException;
+	public List<Message> getUserMessages(clientInterface cl) throws RemoteException;
 	
 	public void postMessage(String msg) throws RemoteException;
 	

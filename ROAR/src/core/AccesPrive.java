@@ -11,6 +11,7 @@ import java.util.regex.PatternSyntaxException;
 
 import remote.InterfacePrivee;
 import remote.Message;
+import remote.clientInterface;
 
 public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializable{
 
@@ -30,9 +31,9 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 	}
 	
 	@Override
-	public List<Message> getUserMessages() throws RemoteException {
+	public List<Message> getUserMessages(clientInterface cl) throws RemoteException {
 		
-		return server.getUserMessages(userName, 10);
+		return server.getUserMessages(userName, 10, cl);
 	}
 
 	@Override
