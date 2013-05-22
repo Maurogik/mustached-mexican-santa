@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -30,7 +31,7 @@ import remote.clientInterface;
 
 import client.windows.MainWindow;
 
-public class Client implements clientInterface
+public class Client implements clientInterface, Serializable
 {
 	
 	public static String ip = "localhost";
@@ -38,6 +39,7 @@ public class Client implements clientInterface
 	public static InterfacePublique iPub;
 	public static InterfacePrivee iPriv;
 	public String login;
+	public int messageGet = 0;
 	public boolean finished;
 	
 	private enum Commande{
@@ -309,9 +311,11 @@ public class Client implements clientInterface
 		ArrayList<Message> messages = new ArrayList<Message>();
 		if(iPriv != null){
 			while(!finished) {
-				messages.addAll((ArrayList<Message>) iPriv.getUserMessages());
+				messages.addAll((ArrayList<Message>) iPriv.getUserMessages(this));
+				messageGet = messages.size();
 			}
 			finished = false;
+			messageGet = 0;
 			StringBuilder s = new StringBuilder();
 			for(int i=0; i < messages.size() && i < n; ++i){
 				s.append(messages.get(i).toString());
@@ -409,4 +413,11 @@ public class Client implements clientInterface
 	public void pullFinished() {
 		finished = true;
 	}
+
+	@Override
+	public int getNbMessageRead() throws RemoteException {
+		return messageGet;
+	}
+	
+	
 }
