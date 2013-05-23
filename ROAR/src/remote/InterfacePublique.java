@@ -20,4 +20,5 @@ public interface InterfacePublique extends Remote
 	
 	public void echo() throws RemoteException;
 	 
+	public void saveServer() throws RemoteException;
 }

@@ -67,4 +67,9 @@ public class AccesPublic extends UnicastRemoteObject implements InterfacePubliqu
 		return server.registerUser(login, mdp);
 	}
 
+	@Override
+	public void saveServer() throws RemoteException {
+		server.saveServer();
+	}
+
 }

@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import remote.Message;
@@ -125,7 +125,7 @@ public class DataServer implements Serializable{
 
 	}
 	
-	private void saveServer(){
+	public void saveServer(){
 		
 		try {
 			
@@ -221,11 +221,12 @@ public class DataServer implements Serializable{
 			for(String hashT : mes.getHashtags()){
 				if(!hashTags.contains(hashT)){
 					hashTags.add(hashT);
+					System.out.println(hashT);
 				}
 			}
 		}
 		
-		System.out.println("get hashtags requested");
+		System.out.println("get hashtags requested, returned " + hashTags.size() +" elements");
 		
 		return hashTags;
 	}
@@ -418,28 +419,31 @@ public class DataServer implements Serializable{
 		
 		for (User followed : usr.getFollowed()) {
 			//Ajoute les messages des personnes suivie
-			res.addAll(getMessagesFrom(followed.getName(), nbMessages));
-			res.addAll(getMessagesTo(followed.getName(), nbMessages));
+			addAllTo(getMessagesFrom(followed.getName(), nbMessages), res);
+			addAllTo(getMessagesTo(followed.getName(), nbMessages), res);
 		}
 		
 		for(String interest : usr.getInterest()){
 			//Ajoute les messages convernant les hashtags suivis
-			res.addAll(getMessagesAbout(interest, nbMessages));
+			addAllTo(getMessagesAbout(interest, nbMessages), res);
 		}
 		
-		res.addAll(getMessagesFrom(user, nbMessages));
+		addAllTo(getMessagesFrom(user, nbMessages), res);
 		
-		res.addAll(getMessagesTo(usr.getName(), nbMessages));
+		addAllTo(getMessagesTo(usr.getName(), nbMessages), res);
 		
 		
 		Collections.sort(res);
 		
+
+		System.out.println("res size "+res.size());
 		try{
 			if(cl.getNbMessageRead() >= nbMessages && res.size() > nbMessages){
 				
 				res = res.subList(cl.getNbMessageRead(), cl.getNbMessageRead()+5);
 
 			} else {
+				System.out.println("pull finished");
 				cl.pullFinished();
 			}
 		} catch (Exception e) {
@@ -447,10 +451,27 @@ public class DataServer implements Serializable{
 		}
 
 		
-		System.out.println("get user messages requested");
+		try {
+			System.out.println("get User messages requested" + " nbLu : " + cl.getNbMessageRead()+ " nbMesReq : " + nbMessages);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return res;
 	}
+	
+	
+	private void addAllTo(List<Message>toAdd, List<Message> finalList){
+		
+		for(Message mes : toAdd){
+			if(!finalList.contains(mes)){
+				finalList.add(mes);
+			}
+		}
+		
+	}
+	
 	
 	private User retrieveUser(String user){
 		

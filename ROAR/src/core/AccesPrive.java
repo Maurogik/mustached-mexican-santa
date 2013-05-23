@@ -44,19 +44,19 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 		
 		try{
 			
-			   Pattern p = Pattern .compile("@([a-z]|[A-Z])+");
+			   Pattern p = Pattern .compile("@([a-z]|[A-Z]|[0-9])+");
 			  
 			   Matcher m = p.matcher(mes);
 			   
 			   while (m.find()){
 				   
 				  recip.add(mes.substring(m.start()+1, m.end()));
-			      System.out.println(mes.substring(m.start(), m.end()));
+			      System.out.println(mes.substring(m.start()+1, m.end()));
 			      
 			   }
 			   
 			   
-			   Pattern p2 = Pattern .compile("#([a-z]|[A-Z])+");
+			   Pattern p2 = Pattern .compile("#([a-z]|[A-Z]|[0-9])+");
 				  
 			   Matcher m2 = p2.matcher(mes);
 			   

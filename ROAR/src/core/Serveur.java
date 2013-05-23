@@ -21,7 +21,7 @@ public class Serveur
 	{
 
 		System.setProperty("java.rmi.server.codebase", "http://localhost:2007/");
-		System.setProperty("java.rmi.server.hostname", "157.169.100.196");
+		System.setProperty("java.rmi.server.hostname", "127.0.0.1");
 		System.setProperty("java.security.auth.login.config", "login.conf");
 
 		try {

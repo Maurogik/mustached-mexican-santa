@@ -11,6 +11,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,16 +32,20 @@ import remote.clientInterface;
 
 import client.windows.MainWindow;
 
-public class Client implements clientInterface, Serializable
+public class Client extends UnicastRemoteObject implements clientInterface, Serializable
 {
 	
+	public Client() throws RemoteException {
+		super();
+	}
+
 	public static String ip = "localhost";
 	
 	public static InterfacePublique iPub;
 	public static InterfacePrivee iPriv;
 	public String login;
 	public int messageGet = 0;
-	public boolean finished;
+	public volatile boolean finished;
 	
 	private enum Commande{
 		PUSH, PULL, H, ERREUR, LOGIN;
@@ -73,9 +78,12 @@ public class Client implements clientInterface, Serializable
 				return inscription();
 			case 3:
 				return rechercher();
-			default:
+			case 4:
+				iPub.saveServer();
 				System.exit(0);
-				return "";
+				return "quit";
+			default:
+				throw new IOException();
 		}
 	}
 	
@@ -100,9 +108,12 @@ public class Client implements clientInterface, Serializable
 				return "Pas implémenté";
 			case 5:
 				return rechercher();
-			default:
+			case 6:
+				iPub.saveServer();
 				System.exit(0);
-				return "";
+				return "quit";
+			default:
+				throw new IOException();
 		}
 	}
 
@@ -195,11 +206,8 @@ public class Client implements clientInterface, Serializable
 			cs = (ConnexionServeur)Naming.lookup("rmi://"+ip+":2001/roar2"); 
 				// rechercher sur cette machine, localhost, un objet remote offrant un service de connexion 
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
 		} catch (RemoteException e) {
-			e.printStackTrace();
 		} catch (NotBoundException e) {
-			e.printStackTrace();
 		}
 		InterfacePrivee acces=null;
 		try {
@@ -207,9 +215,7 @@ public class Client implements clientInterface, Serializable
 		setIPriv(acces);
 		this.login = login;
 		}catch (RemoteException e) {
-			e.printStackTrace();
-		}		catch (LoginException e) {
-			e.printStackTrace();
+		}catch (LoginException e) {
 			System.out.println("Dommage, mauvais login et mot de passe, Recommencez !");
 		}
 		if(iPriv != null)
@@ -249,7 +255,7 @@ public class Client implements clientInterface, Serializable
 		{
 			case 1:
 				for(String str : iPub.getExistingHashtags()) {
-					System.out.println(str = "\n");
+					System.out.println(str + "\n");
 				}
 				return rechercher();
 			case 2:
@@ -258,7 +264,7 @@ public class Client implements clientInterface, Serializable
 				break;
 			case 3:
 				for(String str : iPub.getRegisteredusers()) {
-					System.out.println(str = "\n");
+					System.out.println(str + "\n");
 				}
 				return rechercher();
 			case 4:
@@ -268,14 +274,14 @@ public class Client implements clientInterface, Serializable
 		}
 		
 		System.out.println("Recherche en cours...");
-		Pattern p = Pattern .compile("@([a-z]|[A-Z])+");
+		Pattern p = Pattern .compile("@([a-z]|[A-Z]|[0-9])+");
 		  
 		Matcher m = p.matcher(inputLine);
 		
 		if (m.find()){
 			return pullAuteur(20, inputLine.substring(m.start()+1, m.end()));
 		}
-		p = Pattern .compile("#([a-z]|[A-Z])+");
+		p = Pattern .compile("#([a-z]|[A-Z]|[0-9])+");
 		m = p.matcher(inputLine);
 		if (m.find()){
 		  return pullHastag(20, inputLine.substring(m.start()+1, m.end()));
@@ -381,9 +387,10 @@ public class Client implements clientInterface, Serializable
 		System.setProperty("java.security.policy", "./policy");
 
 
-		Client cl = new Client();
+
 		try 
 		{
+			Client cl = new Client();
 			System.setSecurityManager(new RMISecurityManager());
 			System.out.println("-- Demarrage du Client --");
 			System.out.println("En attente du serveur...");
@@ -392,13 +399,20 @@ public class Client implements clientInterface, Serializable
 			System.out.println("Debut");
 			cl.getIPub().echo();
 			while(true) {
-				if(cl.getIPriv() == null) {
-					System.out.println(cl.menuDisconnect());
-					System.out.println(cl.processInputDisconnect());
-				}
-				else {
-					System.out.println(cl.menuConnect());
-					System.out.println(cl.processInputConnect());
+				
+				try{
+					
+					if(cl.getIPriv() == null) {
+						System.out.println(cl.menuDisconnect());
+						System.out.println(cl.processInputDisconnect());
+					}
+					else {
+						System.out.println(cl.menuConnect());
+						System.out.println(cl.processInputConnect());
+					}
+					
+				} catch (Exception e){
+					System.out.println("Commande incorrecte, veuillez réessayer");
 				}
 				
 			}
@@ -411,6 +425,7 @@ public class Client implements clientInterface, Serializable
 
 	@Override
 	public void pullFinished() {
+		System.out.println("pull finished client");
 		finished = true;
 	}
 
