@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import remote.Message;
+import remote.MessageAscii;
 import remote.User;
 import remote.clientInterface;
 
@@ -234,16 +235,19 @@ public class DataServer implements Serializable{
 	public void postMessage(String content, String author, List<String> recipient, List<String> hashTags){
 		
 		Message mes = new Message(++lastMessageID, author, content);
+		List<String> arts = new ArrayList<String>();
+		arts.add("(^_^)");
+		MessageAscii mesAscii = new MessageAscii(mes.getID(), author, content + "::image::", arts);
 		
 		for(String rec : recipient){
-			mes.addRecipient(rec);
+			mesAscii.addRecipient(rec);
 		}
 		
 		for(String hash : hashTags){
-			mes.addHashtags(hash);
+			mesAscii.addHashtags(hash);
 		}
 		
-		recentMessages.add(mes);
+		recentMessages.add(mesAscii);
 		
 		if(recentMessages.size() >= logSize){
 			saveNewLog();

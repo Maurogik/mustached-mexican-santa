@@ -45,7 +45,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 	public static InterfacePrivee iPriv;
 	public String login;
 	public int messageGet = 0;
-	public volatile boolean finished;
+	public boolean finished;
 	
 	private enum Commande{
 		PUSH, PULL, H, ERREUR, LOGIN;
@@ -413,6 +413,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 					
 				} catch (Exception e){
 					System.out.println("Commande incorrecte, veuillez réessayer");
+					e.printStackTrace();
 				}
 				
 			}
