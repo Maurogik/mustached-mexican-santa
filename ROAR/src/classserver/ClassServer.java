@@ -206,7 +206,8 @@ public abstract class ClassServer implements Runnable {
    * parsing the HTML header.
    * @param line the GET item starting by "Host:"
    */
-  private static String getHost(String line) {
+  @SuppressWarnings("unused")
+private static String getHost(String line) {
     // extract class from Host line
     return line.substring(5, line.length() - 1).trim();
   }

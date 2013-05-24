@@ -84,18 +84,20 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 			case 2:
 				return write();
 			case 3:
-				return follow();
+				return myUsers();
 			case 4:
-				return unfollow();
+				return follow();
 			case 5:
-				return myInteret();
+				return unfollow();
 			case 6:
-				return addInteret();
+				return myInteret();
 			case 7:
-				return delInteret();
+				return addInteret();
 			case 8:
-				return rechercher();
+				return delInteret();
 			case 9:
+				return rechercher();
+			case 10:
 				iPub.saveServer();
 				System.exit(0);
 				return "quit";
@@ -134,13 +136,14 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		s.append("\t\t===== Bienvenue "+ this.login +" ====\n");
 		s.append("1. Messages récents\n");
 		s.append("2. Ecrire message\n");
-		s.append("3. Suivre un utilisateur\n");
-		s.append("4. Renier un utilisateur\n");
-		s.append("5. Mes interets\n");
-		s.append("6. Ajouter un interet\n");
-		s.append("7. Supprimer un interet\n");
-		s.append("8. Rechercher (RoarTag ou Auteur)\n");
-		s.append("9. Quitter\n");
+		s.append("3. Afficher utilisateur suivis\n");
+		s.append("4. Suivre un utilisateur\n");
+		s.append("5. Renier un utilisateur\n");
+		s.append("6. Mes interets\n");
+		s.append("7. Ajouter un interet\n");
+		s.append("8. Supprimer un interet\n");
+		s.append("9. Rechercher (RoarTag ou Auteur)\n");
+		s.append("10. Quitter\n");
 		s.append(">> ");
 		
 		return s.toString();
@@ -376,10 +379,25 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 	
 	private String myInteret() throws IOException {
 		System.out.println("Voici les RoarTag que vous suivez :\n");
-		return iPriv.listInterest();
+		ArrayList<String> interet = (ArrayList<String>) iPriv.listInterest();
+		StringBuilder s = new StringBuilder();
+		for(int i=0; i < interet.size(); ++i){
+			s.append(interet.get(i).toString());
+			s.append('\n');
+		}
+		return s.toString();
 	}
 	
-	
+	private String myUsers() throws IOException {
+		System.out.println("Voici les utilisateurs que vous suivez :\n");
+		ArrayList<String> users = (ArrayList<String>) iPriv.listFollowed();
+		StringBuilder s = new StringBuilder();
+		for(int i=0; i < users.size(); ++i){
+			s.append(users.get(i).toString());
+			s.append('\n');
+		}
+		return s.toString();
+	}
 	
 	public InterfacePublique getIPub(){
 		return iPub;
