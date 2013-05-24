@@ -296,7 +296,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 	}
 	
 	private ArrayList<String> parse(String inputLine) {
-		ArrayList<String> chaine = new ArrayList<>();
+		ArrayList<String> chaine = new ArrayList<String>();
 		String art = "";
 		Pattern p = Pattern .compile("([a-z]|[A-Z]|[0-9]/.)+::)");
 	    Matcher m = p.matcher(inputLine);
