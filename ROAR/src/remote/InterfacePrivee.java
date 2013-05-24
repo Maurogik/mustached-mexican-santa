@@ -39,5 +39,7 @@ public interface InterfacePrivee extends Remote
 	
 	public List<String> listInterest() throws RemoteException;
 	
+	public List<String> listFollowed() throws RemoteException;
+	
 	public String getName() throws RemoteException;
 }

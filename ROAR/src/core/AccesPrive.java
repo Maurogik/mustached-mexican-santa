@@ -148,4 +148,9 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 		
 		return recip;
 	}
+	
+	@Override
+	public List<String> listFollowed() throws RemoteException {
+		return server.getFollowedBy(userName);
+	}
 }
