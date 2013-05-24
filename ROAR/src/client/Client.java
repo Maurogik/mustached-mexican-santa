@@ -1,7 +1,9 @@
 package client;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -143,7 +145,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		s.append("7. Ajouter un interet\n");
 		s.append("8. Supprimer un interet\n");
 		s.append("9. Rechercher (RoarTag ou Auteur)\n");
-		s.append("10. Quitter\n");
+		s.append("0. Quitter\n");
 		s.append(">> ");
 		
 		return s.toString();
@@ -267,18 +269,11 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		}
 		
 		System.out.println("Recherche en cours...");
-		Pattern p = Pattern .compile("@([a-z]|[A-Z]|[0-9])+");
-		  
-		Matcher m = p.matcher(inputLine);
+		if(Integer.decode(part[0]) == 4)
+			return pullAuteur(20, inputLine);
 		
-		if (m.find()){
-			return pullAuteur(20, inputLine.substring(m.start()+1, m.end()));
-		}
-		p = Pattern .compile("#([a-z]|[A-Z]|[0-9])+");
-		m = p.matcher(inputLine);
-		if (m.find()){
-		  return pullHastag(20, inputLine.substring(m.start()+1, m.end()));
-		}
+		if(Integer.decode(part[0]) == 2)
+			return pullHastag(20, inputLine);
 		
 		return "Erreur";
 	}
@@ -292,10 +287,41 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		BufferedReader br=new BufferedReader(isr); 
 		System.out.println("Entrez votre message >> ");
 		String inputLine = br.readLine();
-		iPriv.postMessage(inputLine);
+		ArrayList<String> arts = parse(inputLine);
+		if(arts == null)
+			iPriv.postMessage(inputLine);
+		else
+			iPriv.postMessageAscii(inputLine, arts);
 		return "Message posté !";
 	}
 	
+	private ArrayList<String> parse(String inputLine) {
+		ArrayList<String> chaine = new ArrayList<>();
+		String art = "";
+		Pattern p = Pattern .compile("([a-z]|[A-Z]|[0-9]/.)+::)");
+	    Matcher m = p.matcher(inputLine);
+	   
+	    while (m.find()){
+	    	//lecture du fichier texte	
+			try{
+				InputStream ips=new FileInputStream(inputLine.substring(m.start()+2, m.end()-2)); 
+				InputStreamReader ipsr=new InputStreamReader(ips);
+				BufferedReader br=new BufferedReader(ipsr);
+				String ligne;
+				while ((ligne=br.readLine())!=null){
+					art += ligne+"\n";
+				}
+				br.close();
+			}		
+			catch (Exception e){
+				System.out.println(e.toString());
+			}
+			chaine.add(art);
+	    }
+	    
+		return chaine != null ? chaine : null;
+	}
+
 	private String follow() throws IOException {
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
@@ -311,7 +337,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		System.out.println("Entrez l'utilisateur a renier >> ");
 		String inputLine = br.readLine();
 		iPriv.unfollow(inputLine);
-		return "Utilisateur renier !";
+		return "Utilisateur renié !";
 	}
 
 	/*juste les méthodes à récupérer par rmi*/
@@ -459,7 +485,6 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 
 	@Override
 	public void pullFinished() {
-		System.out.println("pull finished client");
 		finished = true;
 	}
 

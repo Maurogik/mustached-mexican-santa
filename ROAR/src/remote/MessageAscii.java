@@ -25,7 +25,7 @@ public class MessageAscii extends Message implements Serializable{
 		
 		String mes = super.toString();
 		
-		Pattern p = Pattern .compile("(::([a-z]|[A-Z]|[0-9])+::)");
+		Pattern p = Pattern .compile("(::([a-z]|[A-Z]|[0-9]/.)+::)");
 
 		Matcher m = p.matcher(mes);
 		
