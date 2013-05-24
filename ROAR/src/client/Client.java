@@ -1,6 +1,5 @@
 package client;
 
-import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,47 +19,30 @@ import javax.security.auth.login.LoginException;
 
 import authentify.*;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
-
-import core.AccesPrive;
-
 import remote.InterfacePrivee;
 import remote.InterfacePublique;
 import remote.Message;
 import remote.clientInterface;
 
-
-import client.windows.MainWindow;
-
 public class Client extends UnicastRemoteObject implements clientInterface, Serializable
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Client() throws RemoteException {
 		super();
 	}
 
 	public static String ip = "localhost";
 	
-	public static InterfacePublique iPub;
-	public static InterfacePrivee iPriv;
+	public InterfacePublique iPub;
+	public InterfacePrivee iPriv;
 	public String login;
 	public int messageGet = 0;
 	public boolean finished;
-	
-	private enum Commande{
-		PUSH, PULL, H, ERREUR, LOGIN;
-
-		public static Commande val(String s) {
-			try 
-			{
-				return valueOf(s);
-			} 
-			catch(IllegalArgumentException e)
-			{
-				return ERREUR;
-			}
-		}
-	}
 	
 	public String processInputDisconnect() throws IOException 
 	{
@@ -104,11 +86,16 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 			case 3:
 				return follow();
 			case 4:
-				//return interet();
-				return "Pas implémenté";
+				return unfollow();
 			case 5:
-				return rechercher();
+				return myInteret();
 			case 6:
+				return addInteret();
+			case 7:
+				return delInteret();
+			case 8:
+				return rechercher();
+			case 9:
 				iPub.saveServer();
 				System.exit(0);
 				return "quit";
@@ -148,9 +135,12 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		s.append("1. Messages récents\n");
 		s.append("2. Ecrire message\n");
 		s.append("3. Suivre un utilisateur\n");
-		s.append("4. Mes interets\n");
-		s.append("5. Rechercher (RoarTag ou Auteur)\n");
-		s.append("6. Quitter\n");
+		s.append("4. Renier un utilisateur\n");
+		s.append("5. Mes interets\n");
+		s.append("6. Ajouter un interet\n");
+		s.append("7. Supprimer un interet\n");
+		s.append("8. Rechercher (RoarTag ou Auteur)\n");
+		s.append("9. Quitter\n");
 		s.append(">> ");
 		
 		return s.toString();
@@ -294,7 +284,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		return pull(20);
 	}
 	
-	public String write() throws IOException {
+	private String write() throws IOException {
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
 		System.out.println("Entrez votre message >> ");
@@ -303,13 +293,22 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		return "Message posté !";
 	}
 	
-	public String follow() throws IOException {
+	private String follow() throws IOException {
 		InputStreamReader isr=new InputStreamReader(System.in); 
 		BufferedReader br=new BufferedReader(isr); 
-		System.out.println("Entrez l'utilisateur a follow >> ");
+		System.out.println("Entrez l'utilisateur a suivre >> ");
 		String inputLine = br.readLine();
 		iPriv.follow(inputLine);
 		return "Utilisateur suivi !";
+	}
+	
+	private String unfollow() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		System.out.println("Entrez l'utilisateur a renier >> ");
+		String inputLine = br.readLine();
+		iPriv.unfollow(inputLine);
+		return "Utilisateur renier !";
 	}
 
 	/*juste les méthodes à récupérer par rmi*/
@@ -355,16 +354,32 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 			return s.toString();
 	}
 	
-	private String push(String message) throws RemoteException {
-		if(iPriv != null){
-			iPriv.postMessage(message);
-			return "Message posté !";
-		}
-		else {
-			return "Vous n'avez pas les privilége pour effectuer cette action, " +
-					"\nveuillez vous authentifier";
-		}
+	private String addInteret() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		String inputLine;
+		System.out.println("Entrez ici le RoarTag que vous voulez suivre");
+		inputLine = br.readLine();
+		iPriv.addInterest(inputLine);
+		return "RoarTag ajouté";
 	}
+	
+	private String delInteret() throws IOException {
+		InputStreamReader isr=new InputStreamReader(System.in); 
+		BufferedReader br=new BufferedReader(isr); 
+		String inputLine;
+		System.out.println("Entrez ici le RoarTag que vous voulez renier");
+		inputLine = br.readLine();
+		iPriv.removeInterest(inputLine);
+		return "RoarTag supprimé";
+	}
+	
+	private String myInteret() throws IOException {
+		System.out.println("Voici les RoarTag que vous suivez :\n");
+		return iPriv.listInterest();
+	}
+	
+	
 	
 	public InterfacePublique getIPub(){
 		return iPub;
