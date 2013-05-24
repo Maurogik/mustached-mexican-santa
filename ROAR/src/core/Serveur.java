@@ -21,7 +21,7 @@ public class Serveur
 	{
 
 		System.setProperty("java.rmi.server.codebase", "http://localhost:2007/");
-		System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+		System.setProperty("java.rmi.server.hostname", "192.168.1.75");
 		System.setProperty("java.security.auth.login.config", "login.conf");
 
 		try {
@@ -29,7 +29,7 @@ public class Serveur
 			String url;
 			LocateRegistry.createRegistry(2001);
 
-			url = "rmi://localhost:2001"; 
+			url = "rmi://192.168.1.75:2001"; 
 			ConnexionServeurImpl conServImpl = new ConnexionServeurImpl();
 			System.out.println("Enregistrement de l'objet avec l'url : " + url+  "/roar");
 			Naming.rebind(url+"/roar", ap);

@@ -36,7 +36,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		super();
 	}
 
-	public static String ip = "localhost";
+	public static String ip = "192.168.1.98";
 	
 	public InterfacePublique iPub;
 	public InterfacePrivee iPriv;
@@ -97,7 +97,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 				return delInteret();
 			case 9:
 				return rechercher();
-			case 10:
+			case 0:
 				iPub.saveServer();
 				System.exit(0);
 				return "quit";
