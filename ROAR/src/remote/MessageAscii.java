@@ -30,7 +30,7 @@ public class MessageAscii extends Message implements Serializable{
 		Matcher m = p.matcher(mes);
 		
 		int i = 0;
-		System.out.println(arts == null);
+		
 		while (m.find() && i< arts.size()){
 			
 			String before = mes.substring(0, m.start());

@@ -468,7 +468,7 @@ public class DataServer implements Serializable{
 	
 	public List<Message> getUserMessages(String user, int nbMessages, clientInterface cl){
 		List<Message> res = new ArrayList<Message>();
-		
+		int numberOfMessages = nbMessages;
 		User usr = retrieveUser(user);
 		
 		if(usr == null){
@@ -478,46 +478,54 @@ public class DataServer implements Serializable{
 		
 		for (User followed : usr.getFollowed()) {
 			//Ajoute les messages des personnes suivie
-			addAllTo(getMessagesFrom(followed.getName(), nbMessages), res);
-			addAllTo(getMessagesTo(followed.getName(), nbMessages), res);
+			addAllTo(getMessagesFrom(followed.getName(), numberOfMessages), res);
+			addAllTo(getMessagesTo(followed.getName(), numberOfMessages), res);
 		}
 		
 		for(String interest : usr.getInterest()){
 			//Ajoute les messages convernant les hashtags suivis
-			addAllTo(getMessagesAbout(interest, nbMessages), res);
+			addAllTo(getMessagesAbout(interest, numberOfMessages), res);
 		}
 		
-		addAllTo(getMessagesFrom(user, nbMessages), res);
+		addAllTo(getMessagesFrom(user, numberOfMessages), res);
 		
-		addAllTo(getMessagesTo(usr.getName(), nbMessages), res);
+		addAllTo(getMessagesTo(usr.getName(), numberOfMessages), res);
 		
 		
 		Collections.sort(res);
+		Collections.reverse(res);
 		
+		if(res.size() > numberOfMessages){
+			res.removeAll(res.subList(0,res.size() - numberOfMessages));
+		} else {
+			numberOfMessages = res.size();
+		}
 
-		System.out.println("res size "+res.size());
 		try{
-			if(cl.getNbMessageRead() >= nbMessages && res.size() > nbMessages){
-				
-				res = res.subList(cl.getNbMessageRead(), cl.getNbMessageRead()+5);
-
-			} else {
+			int mesRead = cl.getNbMessageRead();
+			
+			if(mesRead + 5 >= numberOfMessages){
 				System.out.println("pull finished");
 				cl.pullFinished();
 			}
+			
+			List<Message> res2 = new ArrayList<Message>();
+			res2.addAll(res.subList( mesRead,  Math.min(mesRead + 5, res.size())));
+
+			return res2;
+			
 		} catch (Exception e) {
-			System.out.println("error dnas get user message");
+			System.out.println("error dans get user message");
 		}
 
 		
 		try {
 			System.out.println("get User messages requested" + " nbLu : " + cl.getNbMessageRead()+ " nbMesReq : " + nbMessages);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 		
-		return res;
+		return new ArrayList<Message>();
 	}
 	
 	
