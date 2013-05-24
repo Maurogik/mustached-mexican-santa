@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MessageAscii extends Message implements Serializable{
+public class MessageAscii extends Message implements Serializable{ 
 
 	/**
 	 * 
@@ -25,7 +25,7 @@ public class MessageAscii extends Message implements Serializable{
 		
 		String mes = super.toString();
 		
-		Pattern p = Pattern .compile("(::([a-z]|[A-Z]|[0-9]/.)+::)");
+		Pattern p = Pattern .compile("(::[^:]+::)");
 
 		Matcher m = p.matcher(mes);
 		

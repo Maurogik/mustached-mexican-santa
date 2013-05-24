@@ -38,7 +38,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		super();
 	}
 
-	public static String ip = "192.168.1.98";
+	public static String ip = "localhost";
 	
 	public InterfacePublique iPub;
 	public InterfacePrivee iPriv;
@@ -298,7 +298,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 	private ArrayList<String> parse(String inputLine) {
 		ArrayList<String> chaine = new ArrayList<String>();
 		String art = "";
-		Pattern p = Pattern .compile("([a-z]|[A-Z]|[0-9]/.)+::)");
+		Pattern p = Pattern .compile("(::[^:]+::)");
 	    Matcher m = p.matcher(inputLine);
 	   
 	    while (m.find()){
