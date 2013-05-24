@@ -235,19 +235,31 @@ public class DataServer implements Serializable{
 	public void postMessage(String content, String author, List<String> recipient, List<String> hashTags){
 		
 		Message mes = new Message(++lastMessageID, author, content);
-		List<String> arts = new ArrayList<String>();
-		arts.add("(^_^)");
-		MessageAscii mesAscii = new MessageAscii(mes.getID(), author, content + "::image::", arts);
+		
+		addMessage(mes, recipient, hashTags);
+
+	}
+	
+	
+	public void postMessageAscii(String content, String author, List<String> recipient, 
+			List<String> hashTags, List<String> arts){
+		
+		MessageAscii mes = new MessageAscii(++lastMessageID, author, content, arts);
+		addMessage(mes, recipient, hashTags);
+		
+	}
+	
+	private void addMessage(Message mes, List<String> recipient, List<String> hashTags){
 		
 		for(String rec : recipient){
-			mesAscii.addRecipient(rec);
+			mes.addRecipient(rec);
 		}
 		
 		for(String hash : hashTags){
-			mesAscii.addHashtags(hash);
+			mes.addHashtags(hash);
 		}
 		
-		recentMessages.add(mesAscii);
+		recentMessages.add(mes);
 		
 		if(recentMessages.size() >= logSize){
 			saveNewLog();
@@ -257,8 +269,9 @@ public class DataServer implements Serializable{
 			saveServer();
 		}
 		
-		System.out.println("message from "+author+" posted");
+		System.out.println("message from "+mes.getAuthors().get(0)+" posted");
 	}
+
 	
 	public void relayerMessage(String user, long mesID){
 
@@ -312,6 +325,20 @@ public class DataServer implements Serializable{
 		System.out.println("relashionship added");
 	}
 	
+	public void removeFollowRelationship(String follower, String followed){
+		User foler = retrieveUser(follower);
+		User foled = retrieveUser(followed);
+		
+		if(foled != null && foler!= null){
+			foler.getFollowed().remove(foled);
+			foled.getFollowers().remove(foler);
+		}else {
+			System.out.println("Error, unknown user");
+		}
+		
+		System.out.println("relashionship removed");
+	}
+	
 	public void addInterest(String user, String interest){
 		User usr = retrieveUser(user);
 		if(usr == null){
@@ -322,6 +349,19 @@ public class DataServer implements Serializable{
 		
 		System.out.println("interest added");
 	}
+	
+	
+	public void removeInterest(String user, String interest){
+		User usr = retrieveUser(user);
+		if(usr == null){
+			System.out.println("Error, unknown user");
+			return;
+		}
+		usr.getInterest().remove(interest);
+		
+		System.out.println("interest removed");
+	}
+	
 	
 	public List<Message> getMessagesFrom(String user, int nbMes){
 		

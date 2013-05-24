@@ -39,36 +39,8 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 	@Override
 	public void postMessage(String mes) throws RemoteException {
 		
-		List<String> recip = new ArrayList<String>();
-		List<String> hashT = new ArrayList<String>();
-		
-		try{
-			
-			   Pattern p = Pattern .compile("@([a-z]|[A-Z]|[0-9])+");
-			  
-			   Matcher m = p.matcher(mes);
-			   
-			   while (m.find()){
-				   
-				  recip.add(mes.substring(m.start()+1, m.end()));
-			      System.out.println(mes.substring(m.start()+1, m.end()));
-			      
-			   }
-			   
-			   
-			   Pattern p2 = Pattern .compile("#([a-z]|[A-Z]|[0-9])+");
-				  
-			   Matcher m2 = p2.matcher(mes);
-			   
-			   while (m2.find()){
-				   
-				  hashT.add(mes.substring(m2.start()+1, m2.end()));
-			      System.out.println(mes.substring(m2.start(), m2.end()));
-			      
-			   }
-			   
-		}catch(PatternSyntaxException pse){
-		}
+		List<String> recip =  getRecipents(mes);
+		List<String> hashT = getHastags(mes);
 		
 		server.postMessage(mes, userName, recip, hashT);
 	}
@@ -102,5 +74,78 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 		
 		return server.getInsterestOf(userName);
 	}
+	
+	@Override
+	public void postMessageAscii(String msg, List<String> arts)
+			throws RemoteException {
+		
+		List<String> recip =  getRecipents(msg);
+		List<String> hashT = getHastags(msg);
+		
+		server.postMessageAscii(msg, userName, recip, hashT, arts);
+		
+	}
+	
+	@Override
+	public void unfollow(String userToFollow) throws RemoteException {
+		server.removeFollowRelationship(userName, userToFollow);
+	}
+	
+	@Override
+	public void removeInterest(String interest) throws RemoteException {
+		server.removeInterest(userName, interest);		
+	}
+	
+	@Override
+	public List<String> listInterest() throws RemoteException {
+		return server.getInsterestOf(userName);
+	}
 
+	private List<String> getHastags(String mes){
+
+		List<String> hashT = new ArrayList<String>();
+		
+		try{		   
+			   
+			   Pattern p2 = Pattern .compile("#([a-z]|[A-Z]|[0-9])+");
+				  
+			   Matcher m2 = p2.matcher(mes);
+			   
+			   while (m2.find()){
+				   
+				  hashT.add(mes.substring(m2.start()+1, m2.end()));
+			      System.out.println(mes.substring(m2.start(), m2.end()));
+			      
+			   }
+			   
+		}catch(PatternSyntaxException pse){
+		}
+		
+		return hashT;
+	}
+	
+	private List<String> getRecipents(String mes){
+		
+		List<String> recip = new ArrayList<String>();
+
+		
+		try{
+			
+			   Pattern p = Pattern .compile("@([a-z]|[A-Z]|[0-9])+");
+			  
+			   Matcher m = p.matcher(mes);
+			   
+			   while (m.find()){
+				   
+				  recip.add(mes.substring(m.start()+1, m.end()));
+			      System.out.println(mes.substring(m.start()+1, m.end()));
+			      
+			   }
+			   
+			   
+		}catch(PatternSyntaxException pse){
+		}
+		
+		return recip;
+	}
 }

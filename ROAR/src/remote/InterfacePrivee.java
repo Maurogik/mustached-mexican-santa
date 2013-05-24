@@ -25,11 +25,19 @@ public interface InterfacePrivee extends Remote
 	
 	public void postMessage(String msg) throws RemoteException;
 	
+	public void postMessageAscii(String msg, List<String> arts) throws RemoteException;
+	
 	public void relayerMessage(long mesID) throws RemoteException;
 	
 	public void follow(String userToFollow) throws RemoteException;
 	
+	public void unfollow(String userToFollow) throws RemoteException;
+	
 	public void addInterest(String interest) throws RemoteException;
+	
+	public void removeInterest(String interest) throws RemoteException;
+	
+	public List<String> listInterest() throws RemoteException;
 	
 	public String getName() throws RemoteException;
 }
