@@ -38,7 +38,7 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 
 	@Override
 	public void postMessage(String mes) throws RemoteException {
-		
+
 		List<String> recip =  getRecipents(mes);
 		List<String> hashT = getHastags(mes);
 		
@@ -78,7 +78,7 @@ public class AccesPrive extends AccesPublic implements InterfacePrivee, Serializ
 	@Override
 	public void postMessageAscii(String msg, List<String> arts)
 			throws RemoteException {
-		
+
 		List<String> recip =  getRecipents(msg);
 		List<String> hashT = getHastags(msg);
 		

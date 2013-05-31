@@ -235,7 +235,6 @@ public class DataServer implements Serializable{
 	public void postMessage(String content, String author, List<String> recipient, List<String> hashTags){
 		
 		Message mes = new Message(++lastMessageID, author, content);
-		
 		addMessage(mes, recipient, hashTags);
 
 	}
@@ -244,8 +243,8 @@ public class DataServer implements Serializable{
 	public void postMessageAscii(String content, String author, List<String> recipient, 
 			List<String> hashTags, List<String> arts){
 		
-		MessageAscii mes = new MessageAscii(++lastMessageID, author, content, arts);
-		addMessage(mes, recipient, hashTags);
+		MessageAscii mesacsi = new MessageAscii(++lastMessageID, author, content, arts);
+		addMessage(mesacsi, recipient, hashTags);
 		
 	}
 	
@@ -508,7 +507,7 @@ public class DataServer implements Serializable{
 				System.out.println("pull finished");
 				cl.pullFinished();
 			}
-			
+
 			List<Message> res2 = new ArrayList<Message>();
 			res2.addAll(res.subList( mesRead,  Math.min(mesRead + 5, res.size())));
 

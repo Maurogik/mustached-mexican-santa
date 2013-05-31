@@ -1,7 +1,9 @@
 package core;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -21,9 +23,10 @@ public class Serveur
 	{
 
 		System.setProperty("java.rmi.server.codebase", "http://localhost:2007/");
-		System.setProperty("java.rmi.server.hostname", "192.168.0.10");
+		System.setProperty("java.rmi.server.hostname", "127.0.0.1");
 		System.setProperty("java.security.auth.login.config", "login.conf");
 
+		
 		try {
 			AccesPublic ap = new AccesPublic();
 			String url;

@@ -11,12 +11,11 @@ public class MessageAscii extends Message implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 0xDEADCAFE;
+	private static final long serialVersionUID = 0xDEADC0FE;
 	List<String> arts;
 
 	public MessageAscii(long iD, String autho, String cont, List<String> arts) {
 		super(iD, autho, cont);
-		this.arts = new ArrayList<String>();
 		this.arts = arts;
 	}
 
@@ -24,25 +23,32 @@ public class MessageAscii extends Message implements Serializable{
 	public String toString(){
 		
 		String mes = super.toString();
-		
 		Pattern p = Pattern .compile("(::[^:]+::)");
-
-		Matcher m = p.matcher(mes);
-		
+		String res = "";
+		String after="";
 		int i = 0;
 		
-		while (m.find() && i< arts.size()){
-			
+		while ( i< arts.size()){
+			Matcher m = p.matcher(mes);
+			m.find();
 			String before = mes.substring(0, m.start());
-			String after = mes.substring(m.end(), mes.length());
+			after = mes.substring(m.end(), mes.length());
+			mes = after;
 			
-			mes = before + "\n" + arts.get(i) + "\n" + after;
-			
-			System.out.println(mes);
+			res += before + "\n" + arts.get(i) + "\n";
+
 			++i;
 		}
+		
+		res += after;
 
-		return mes;
+		return res;
+	}
+	
+	@Override
+	public int compareTo(Message o) {
+		
+		return o.getDate().compareTo(getDate());
 	}
 
 }

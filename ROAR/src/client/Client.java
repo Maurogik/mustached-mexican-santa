@@ -288,10 +288,12 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 		System.out.println("Entrez votre message >> ");
 		String inputLine = br.readLine();
 		ArrayList<String> arts = parse(inputLine);
-		if(arts == null)
+		if(arts == null || arts.size()<1 ){
 			iPriv.postMessage(inputLine);
-		else
+		}
+		else{
 			iPriv.postMessageAscii(inputLine, arts);
+		}
 		return "Message posté !";
 	}
 	
@@ -304,6 +306,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 	    while (m.find()){
 	    	//lecture du fichier texte	
 			try{
+				art="";
 				InputStream ips=new FileInputStream(inputLine.substring(m.start()+2, m.end()-2)); 
 				InputStreamReader ipsr=new InputStreamReader(ips);
 				BufferedReader br=new BufferedReader(ipsr);
@@ -312,6 +315,7 @@ public class Client extends UnicastRemoteObject implements clientInterface, Seri
 					art += ligne+"\n";
 				}
 				br.close();
+				
 			}		
 			catch (Exception e){
 				System.out.println(e.toString());
