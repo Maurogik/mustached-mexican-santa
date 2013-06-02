@@ -4,47 +4,44 @@ Mini-projet d'application répartie
 						Roarer
 				(twitter-like application)
 
+Auteurs : Ancelin ARNAUD, Gwenn AUBERT, Matthieu MAUGARD
 
-```                `````````---.` ....:..   ``.::--.``                          
-``                ```..-//::-:+++-/+/oss.`-::shhso+:.```                 `````  
-         ````  ``````.://oyso+oos++yyhdmshdhdmNmdy+osyyo+/:.``           ````   
-``  ```````````````..--++oshhooo+ooyddmNNMNNmdyyoshddhyyo//:-.``                
-``````````````````.---:+sssyyyoo++ohmmmNMMmmdhssooosyhhhhhhhs+:.``            ``
-```` ``````.---::////+++oyyyyoososoymNNNMMmdmmdyooosyhhhhyhddhyo:.``````````````
-```````````-/syyyyssssyyhyysyyssshhhmmmNMNddhdhhyso+osyhhhysssso+:-.````````````
-``````````.:oyyssooosyyyyyhysyhhhdmdddmNNmddhhddysssossyyysssssyss+:.```````````
-```` ````.:+yhyysssyhddhyysyhhdmddmddyyhhyyhhhhhdyysoosyyysshhdddmmy/.``````````
-`````````.:+sssssssyyhhyyyhhmmddmdmhhssosshdddhyhhhyossyhyssyhmNMMNmy/-`````````
-``````````.:ossoosossyyyyydmdyo++oo+oshhhhyoso+oshdmmdhyyysoyhhhhmmNy/-.````````
-``````````.:++o+++osyhhhdmdhy+/////o+shmhs+oo+ossdmhyhhdhyyyssddddNNd+-..`......
-``````````.-:///+oosyhdddddyo+/::/:/oyhNysso+++ooyhmdhdhdmddyyyhmNMms/-.........
-`````````.:::::/+osyhhhdddhs+://:+:-+hdmhys//o+ososhmmmmdhhddyyhNNmh+:-...---...
-```````.-:::///+oososhdhhhs+:+sso+:/osydsos+/+yhhssyhddmdyso++ooohdho-...-----..
-`````..-::/+/:--:/ohddddhs/+dmmmd+os+/+y+/oys+mmNNmdyyhdmdddhs+/::ohs:..--------
-```..-::/+++:..:+shhdddhhs+oh:+oho-+///s//os/+mss+shyhdmdddhyoo/:.-sy+-.------:-
-``..--://+/:..-/ossyhddddh+/shs::++//::+//+o+y/+ohyyhdNNmmhss+/+/-./so:------:::
-....-:://+/--.-/+ossydhydyso/sos++s+::/+:/+sysosyyyydmNmdhys++//::.:soo:-----:::
-..--:///+/::--:+oooosyyyyyo++oss+o/::/++//++ossyhhyhdmdhssosy+o++:--+os+::---://
------:::///:--:://++osyhhhs+oos++////+oso//+++soshhddhssssoysyoo+/--:+o+////:://
-.----::/+/:--::////++osyhhyso://++/:+oyysoo/+ooooossysosyoooososo/-.-/+++++/////
---::///++//::::--:/++osyhddy+///:/::/+oso++//+++sysshyhyo+/+/oyo+/:-::+++//////+
-::://++o+//::-.--//+ooo+syhddo::-/hNMmhdhmMmdo+/ossmdmmhss++o/+oo+:--/+///:///++
--:/+ooss//+/-----//::/oyysdmhh-:/:-:+hmdmdo+:++/+oNmmmdys+++oo+///+::////::://++
-+osyyhs++s+-:---:--:/ossshmNmd--:---.-+Ns--:/:://ohhysso++///:::/-+/:+++/::://++
-+syhddsyys/::::---:/syysddddhy/--...`.-y:...-::/+shyyys++/+/+/::-:+//+s+//:://++
-osdNMdddhs/os/----/sdhdmdhhyyydo::-.:yNMNh+/:/oshNNdhsss+//+/:///:+o++syo/::://+
-hmNMNNNmddsy+.-:///hhhdhhyyyyhmmdys+//ooo/:+odmMMmhhhooss/++//:/+++yohsss+//:://
-mNMNNNMNNNho:-/++ooyhhsoyhhyhyhh/```.`----..`-oNmdhyhsyyh//////os+oshhhsoo++////
-mNNNMNNMNMNs+/oh++sshhossyyyysyy+//---./.:-:+yhhyhyssyooy+/::/oyhsshmhyso+ooosso
-mmNMNNMMNMNmhhmhoydmyo+syyyyysosyhhyyyshosyyhyyhhhosoyho+/+::/sNmmhhmmyhoooosyss
-mNNNMNNMMNMNNmNdNMNs++sysooo/oyyhdhhhhyhdmmmhhhyshsohsdho:+/+odNMNMddddhhssyhyhy
-mNNNMMNMMMMNMMMNMNh:osssos++yyhdhddyyhsohdddssoooohoyydmds+sdhMMMMMNddmdyyshdhyy
-mmNMNMMMMMMMMMMNMNhohhyoys+yshmmymdhdyyhyyhh+/+++ssssmNMMdymMMMMMMMMNddddhhhmmdd
-mNNNMNMMMMMMMMMMMMNydhmhyoosmdddhmNNmdhmdhyh+ohysddhmMNMMmmMMMMMMMMNNmddmdddmmmm
-mmdNNNMMMMMMMMMMMMMNNNNmyhhhmmmNmdmNNNmNNNNsymNmmNNMMNMMMNNMMMMMMMMNNmmdmdmmmmmN
-mhdmmMMMMMMMMMMMMMMMMmMmhdmNNNNmNNNMNMMMMMNmNMMMMMMMMMMMMMMMMMMMMNMMNmmmmmmmNNmN
-hdNNNMMMMMMMMMMMMMMMMNMNmmmNNNdNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNNNmNmmNNNNNNN
-hddNNNMMMMMMNMMMMMMMMMMMMNdNNNNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNmNMMNNNNmNNNNNN
+
+                      ,.
+                    ,_> `.   ,';
+                ,-`'      `'   '`'._
+             ,,-) ---._   |   .---''`-),.
+           ,'      `.  \  ;  /   _,'     `,
+        ,--' ____       \   '  ,'    ___  `-,
+       _>   /--. `-.              .-'.--\   \__
+      '-,  (    `.  `.,`~ \~'-. ,' ,'    )    _\
+      _>    \     \ ,'  ') )   `. /     /    <,.
+   ,-'   _,  \    ,'    ( /      `.    /        `-,
+   `-.,-'     `.,'       `         `.,'  `\    ,-'
+    ,'       _  /   ,,,      ,,,     \     `-. `-._
+   /-,     ,'  ;   ' _ \    / _ `     ; `.     `(`-\
+    /-,        ;    (o)      (o)      ;          `'`,
+  ,~-'  ,-'    \     '        `      /     \      <_
+  /-. ,'        \                   /       \     ,-'
+    '`,     ,'   `-/             \-' `.      `-. <
+     /_    /      /   (_     _)   \    \          `,
+       `-._;  ,' |  .::.`-.-' :..  |       `-.    _\
+         _/       \  `:: ,^. :.:' / `.        \,-'
+       '`.   ,-'  /`-..-'-.-`-..-'\            `-.
+         >_ /     ;  (\/( ' )\/)  ;     `-.    _<
+         ,-'      `.  \`-^^^-'/  ,'        \ _<
+          `-,  ,'   `. `"""""' ,'   `-.   <`'
+            ')        `._.,,_.'        \ ,-'
+             '._        '`'`'   \       <
+                >   ,'       ,   `-.   <`'
+                 `,/          \      ,-`
+                  `,   ,' |   /     /
+                   '; /   ;        (
+                    _)|   `       (
+                    `')         .-'
+                      <_   \   /   
+                        \   /\(
+                         `;/  `
 
 
 Description du projet
@@ -59,7 +56,7 @@ Fonctionnalités offertes
 			- Connexion
 			- Fonctionnalités de recherches (listage des utilisateurs, des roarTags, recherche par utilisateur, par roarTags)
 		- Pour l'utilisateur connecté :
-			- Ecriture de message, avec destinataire et topic (roarTag) optionnels
+			- Ecriture de message, avec destinataire et topics (roarTags) optionnels
 			- Récupération des messages récents concernant l'utilisateur
 			- Afficher les utilisateurs suivis
 			- Afficher les intérêts (roarTags) suivis
@@ -70,6 +67,21 @@ Fonctionnalités offertes
 		- Ajout d'un fichier ascii art entre les balises ::fichier:: dans le message et affichage de l'acsii art lors de la lecture
 		- Persistence du serveur d'une utilisation sur l'autre
 		- Sauvegarde des messages dans des logs s'ils sont trop nombreux (pour ne pas tout garder en mémoire).
+
+Fonctionnement du projet 
+
+	Le fonctionnement du projet s'articule autour de deux parties, le client et le serveur.
+
+	Voici un scénario d'exécution possible :
+
+		1- Démarrage du serveur avec chargement des anciennes données (si elles existent)
+		2- Le serveur attend la connexion de client
+		3- Un client se connecte et récupère le stub d'un objet distant d'accès public au serveur
+		4- Le client utilise le stub de l'accès public pour s'authentifier, il lui est renvoyé un stub vers un accès privé
+		5- Le client utilise le stub de l'accès privé pour communiquer avec le serveur (envoie de message, récupération de données...)
+		6- Le client a terminé et quitte l'application
+		7- Le serveur est sauvegardé lors de la deconnexion du client
+		=> 1 (on recommence)
 
 
 Difficultés rencontrées
@@ -117,4 +129,4 @@ Comment lancer le projet
 		Pour le serveur : java -cp bin/ core.Serveur
 		Pour le client : java -cp bin/ client.Client
 
-	Le projet est actuellement configuré pour fonctionner avec un client et un serveur en local sur la même machine.
+	Le projet est actuellement configuré pour fonctionner avec un client et un serveur en local sur la même machine, la configuration est faite dans le code, donc il n'y a rien a paramètrer.
