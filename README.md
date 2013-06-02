@@ -5,50 +5,55 @@ Mini-projet d'application répartie
 				(twitter-like application)
 
 
-                      ,.
-                    ,_> `.   ,';
-                ,-`'      `'   '`'._
-             ,,-) ---._   |   .---''`-),.
-           ,'      `.  \  ;  /   _,'     `,
-        ,--' ____       \   '  ,'    ___  `-,
-       _>   /--. `-.              .-'.--\   \__
-      '-,  (    `.  `.,`~ \~'-. ,' ,'    )    _\
-      _>    \     \ ,'  ') )   `. /     /    <,.
-   ,-'   _,  \    ,'    ( /      `.    /        `-,
-   `-.,-'     `.,'       `         `.,'  `\    ,-'
-    ,'       _  /   ,,,      ,,,     \     `-. `-._
-   /-,     ,'  ;   ' _ \    / _ `     ; `.     `(`-\
-    /-,        ;    (o)      (o)      ;          `'`,
-  ,~-'  ,-'    \     '        `      /     \      <_
-  /-. ,'        \                   /       \     ,-'
-    '`,     ,'   `-/             \-' `.      `-. <
-     /_    /      /   (_     _)   \    \          `,
-       `-._;  ,' |  .::.`-.-' :..  |       `-.    _\
-         _/       \  `:: ,^. :.:' / `.        \,-'
-       '`.   ,-'  /`-..-'-.-`-..-'\            `-.
-         >_ /     ;  (\/( ' )\/)  ;     `-.    _<
-         ,-'      `.  \`-^^^-'/  ,'        \ _<
-          `-,  ,'   `. `"""""' ,'   `-.   <`'
-            ')        `._.,,_.'        \ ,-'
-             '._        '`'`'   \       <
-                >   ,'       ,   `-.   <`'
-                 `,/          \      ,-`
-                  `,   ,' |   /     /
-                   '; /   ;        (
-                    _)|   `       (
-                    `')         .-'
-                      <_   \   /   
-                        \   /\(
-                         `;/  `
+```                `````````---.` ....:..   ``.::--.``                          
+``                ```..-//::-:+++-/+/oss.`-::shhso+:.```                 `````  
+         ````  ``````.://oyso+oos++yyhdmshdhdmNmdy+osyyo+/:.``           ````   
+``  ```````````````..--++oshhooo+ooyddmNNMNNmdyyoshddhyyo//:-.``                
+``````````````````.---:+sssyyyoo++ohmmmNMMmmdhssooosyhhhhhhhs+:.``            ``
+```` ``````.---::////+++oyyyyoososoymNNNMMmdmmdyooosyhhhhyhddhyo:.``````````````
+```````````-/syyyyssssyyhyysyyssshhhmmmNMNddhdhhyso+osyhhhysssso+:-.````````````
+``````````.:oyyssooosyyyyyhysyhhhdmdddmNNmddhhddysssossyyysssssyss+:.```````````
+```` ````.:+yhyysssyhddhyysyhhdmddmddyyhhyyhhhhhdyysoosyyysshhdddmmy/.``````````
+`````````.:+sssssssyyhhyyyhhmmddmdmhhssosshdddhyhhhyossyhyssyhmNMMNmy/-`````````
+``````````.:ossoosossyyyyydmdyo++oo+oshhhhyoso+oshdmmdhyyysoyhhhhmmNy/-.````````
+``````````.:++o+++osyhhhdmdhy+/////o+shmhs+oo+ossdmhyhhdhyyyssddddNNd+-..`......
+``````````.-:///+oosyhdddddyo+/::/:/oyhNysso+++ooyhmdhdhdmddyyyhmNMms/-.........
+`````````.:::::/+osyhhhdddhs+://:+:-+hdmhys//o+ososhmmmmdhhddyyhNNmh+:-...---...
+```````.-:::///+oososhdhhhs+:+sso+:/osydsos+/+yhhssyhddmdyso++ooohdho-...-----..
+`````..-::/+/:--:/ohddddhs/+dmmmd+os+/+y+/oys+mmNNmdyyhdmdddhs+/::ohs:..--------
+```..-::/+++:..:+shhdddhhs+oh:+oho-+///s//os/+mss+shyhdmdddhyoo/:.-sy+-.------:-
+``..--://+/:..-/ossyhddddh+/shs::++//::+//+o+y/+ohyyhdNNmmhss+/+/-./so:------:::
+....-:://+/--.-/+ossydhydyso/sos++s+::/+:/+sysosyyyydmNmdhys++//::.:soo:-----:::
+..--:///+/::--:+oooosyyyyyo++oss+o/::/++//++ossyhhyhdmdhssosy+o++:--+os+::---://
+-----:::///:--:://++osyhhhs+oos++////+oso//+++soshhddhssssoysyoo+/--:+o+////:://
+.----::/+/:--::////++osyhhyso://++/:+oyysoo/+ooooossysosyoooososo/-.-/+++++/////
+--::///++//::::--:/++osyhddy+///:/::/+oso++//+++sysshyhyo+/+/oyo+/:-::+++//////+
+::://++o+//::-.--//+ooo+syhddo::-/hNMmhdhmMmdo+/ossmdmmhss++o/+oo+:--/+///:///++
+-:/+ooss//+/-----//::/oyysdmhh-:/:-:+hmdmdo+:++/+oNmmmdys+++oo+///+::////::://++
++osyyhs++s+-:---:--:/ossshmNmd--:---.-+Ns--:/:://ohhysso++///:::/-+/:+++/::://++
++syhddsyys/::::---:/syysddddhy/--...`.-y:...-::/+shyyys++/+/+/::-:+//+s+//:://++
+osdNMdddhs/os/----/sdhdmdhhyyydo::-.:yNMNh+/:/oshNNdhsss+//+/:///:+o++syo/::://+
+hmNMNNNmddsy+.-:///hhhdhhyyyyhmmdys+//ooo/:+odmMMmhhhooss/++//:/+++yohsss+//:://
+mNMNNNMNNNho:-/++ooyhhsoyhhyhyhh/```.`----..`-oNmdhyhsyyh//////os+oshhhsoo++////
+mNNNMNNMNMNs+/oh++sshhossyyyysyy+//---./.:-:+yhhyhyssyooy+/::/oyhsshmhyso+ooosso
+mmNMNNMMNMNmhhmhoydmyo+syyyyysosyhhyyyshosyyhyyhhhosoyho+/+::/sNmmhhmmyhoooosyss
+mNNNMNNMMNMNNmNdNMNs++sysooo/oyyhdhhhhyhdmmmhhhyshsohsdho:+/+odNMNMddddhhssyhyhy
+mNNNMMNMMMMNMMMNMNh:osssos++yyhdhddyyhsohdddssoooohoyydmds+sdhMMMMMNddmdyyshdhyy
+mmNMNMMMMMMMMMMNMNhohhyoys+yshmmymdhdyyhyyhh+/+++ssssmNMMdymMMMMMMMMNddddhhhmmdd
+mNNNMNMMMMMMMMMMMMNydhmhyoosmdddhmNNmdhmdhyh+ohysddhmMNMMmmMMMMMMMMNNmddmdddmmmm
+mmdNNNMMMMMMMMMMMMMNNNNmyhhhmmmNmdmNNNmNNNNsymNmmNNMMNMMMNNMMMMMMMMNNmmdmdmmmmmN
+mhdmmMMMMMMMMMMMMMMMMmMmhdmNNNNmNNNMNMMMMMNmNMMMMMMMMMMMMMMMMMMMMNMMNmmmmmmmNNmN
+hdNNNMMMMMMMMMMMMMMMMNMNmmmNNNdNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNNNmNmmNNNNNNN
+hddNNNMMMMMMNMMMMMMMMMMMMNdNNNNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNmNMMNNNNmNNNNNN
 
 
 Description du projet
 
-	Le but de ce projet est de mettre en place une application ressemblant a Twitter, basée sur la technologie RMI. L'application offrira la possibilité de lire et d'écrire et de lire des messages (et plein d'autres choses !).
+	Le but de ce projet est de mettre en place une application ressemblant à Twitter, basée sur la technologie RMI. L'application offrira la possibilité de lire et d'écrire et de lire des messages (et plein d'autres choses !).
 
 Fonctionnalités offertes
 
-	Voici la liste des fonctionnalités qui ont était implémentées dans le projet :
+	Voici la liste des fonctionnalités qui ont été implémentées dans le projet :
 		- Pour l'utilisateur non connecté :
 			- Incription
 			- Connexion
@@ -57,25 +62,25 @@ Fonctionnalités offertes
 			- Ecriture de message, avec destinataire et topic (roarTag) optionnels
 			- Récupération des messages récents concernant l'utilisateur
 			- Afficher les utilisateurs suivis
-			- Afficher les interêts (roarTags) suivis
+			- Afficher les intérêts (roarTags) suivis
 			- Suivre/Renier un utilisateur
-			- Ajouter/Supprimer un interêt
+			- Ajouter/Supprimer un intérêt
 			- Fonctionnalités de recherches (comme pour le mode non connecté)
 		- Sécurisation de la connexion via JAAS
 		- Ajout d'un fichier ascii art entre les balises ::fichier:: dans le message et affichage de l'acsii art lors de la lecture
 		- Persistence du serveur d'une utilisation sur l'autre
-		- Sauvegarde des messages dans des logs si ils sont trop nombreux (pour ne pas tout garder en mémoire)
+		- Sauvegarde des messages dans des logs s'ils sont trop nombreux (pour ne pas tout garder en mémoire).
 
 
 Difficultés rencontrées
 
-	Au cours de ce projet, le problème qui nous as le plus ralentit fut la configuration des propriétés de lancement. Nous avons ainsi perdu plusieurs heures à cause d'un server.hostname oublié.
-	A part cela, nous n'avons pas rencontré de problèmes vraiment génants.
+	Au cours de ce projet, le problème qui nous a le plus ralentit fut la configuration des propriétés de lancement. Nous avons ainsi perdu plusieurs heures à cause d'un server.hostname oublié.
+	A part cela, nous n'avons pas rencontré de problèmes vraiment gênants.
 	Pour le client, une utilisation judicieuse des expressions régulières permet de traiter les messages.
-	La mise en place de l'authentifaction JAAS c'est faite sans accroc.
+	La mise en place de l'authentifacation JAAS s'est faite sans accroc.
 	C'est probablement le fait que nous ayons eut, dès le départ, une architecture clairement définie qui nous a permis de réaliser le projet aisément tout en séparant les tâches à effectuer.
 
-Fichiers fournis
+Fichiers fournis :
 
 	ROAR =>	
 			src =>	
@@ -107,7 +112,7 @@ Fichiers fournis
 
 Comment lancer le projet
 
-	Pour utiliser le projet, rendez vous dans le dossier ROAR et exécuter les commandes suivantes :
+	Pour utiliser le projet, rendez-vous dans le dossier ROAR et exécuter les commandes suivantes :
 
 		Pour le serveur : java -cp bin/ core.Serveur
 		Pour le client : java -cp bin/ client.Client
