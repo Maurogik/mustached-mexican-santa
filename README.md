@@ -44,7 +44,7 @@ Mini-projet d'application répartie
 
 Description du projet
 
-	Le but de ce projet est de mettre en place une application ressemblant a Twitter, basée sur la technologie RMI. L'application offrira la possibilité de lire et d'écrire et de lire des messages (et plein d'autres !).
+	Le but de ce projet est de mettre en place une application ressemblant a Twitter, basée sur la technologie RMI. L'application offrira la possibilité de lire et d'écrire et de lire des messages (et plein d'autres choses !).
 
 Fonctionnalités offertes
 
@@ -63,23 +63,28 @@ Fonctionnalités offertes
 			- Fonctionnalités de recherches (comme pour le mode non connecté)
 		- Sécurisation de la connexion via JAAS
 		- Ajout d'un fichier ascii art entre les balises ::fichier:: dans le message et affichage de l'acsii art lors de la lecture
-		- Persistence du serveur, sauvegarde des messages dans des logs si ils sont trop nombreux (pour ne pas tout garder en mémoire)
+		- Persistence du serveur d'une utilisation sur l'autre
+		- Sauvegarde des messages dans des logs si ils sont trop nombreux (pour ne pas tout garder en mémoire)
 
 
 Difficultés rencontrées
 
-	Nous pas rencontré de diffucultés particulières pour ce projet.
+	Au cours de ce projet, le problème qui nous as le plus ralentit fut la configuration des propriétés de lancement. Nous avons ainsi perdu plusieurs heures à cause d'un server.hostname oublié.
+	A part cela, nous n'avons pas rencontré de problèmes vraiment génants.
+	Pour le client, une utilisation judicieuse des expressions régulières permet de traiter les messages.
+	La mise en place de l'authentifaction JAAS c'est faite sans accroc.
+	C'est probablement le fait que nous ayons eut, dès le départ, une architecture clairement définie qui nous a permis de réaliser le projet aisément tout en séparant les tâches à effectuer.
 
 Fichiers fournis
 
 	ROAR =>	
 			src =>	
-					authentify : package JAAS
-					classserver : package pour le téléchargement dynamique de classes
-					client : package contenant les sources du client
-					core : package contenant les sources du serveur et des implémentations distantes
-					remote : package contenant les classes en commun entre le serveur et le client
-					security : package pour la sécurité JAAS
+					authentify => package JAAS
+					classserver => package pour le téléchargement dynamique de classes
+					client => package contenant les sources du client
+					core => package contenant les sources du serveur et des implémentations distantes
+					remote => package contenant les classes en commun entre le serveur et le client
+					security => package pour la sécurité JAAS
 
 			bin =>	
 					authentify
